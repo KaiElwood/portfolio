@@ -4,8 +4,10 @@ import type {
   InferGetStaticPropsType,
   NextPage,
 } from "next";
+import PostsList from "src/components/PostsList";
 import Head from "next/head";
 import Link from "next/link";
+import { Box } from "@chakra-ui/react";
 
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<{ posts: Post[] }>
@@ -22,13 +24,8 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <title>NextJs Content Layer Blog Template</title>
       </Head>
 
-      {posts.map((post, idx) => (
-        <div key={idx}>
-          <Link href={post.url}>
-            <a>{post.title}</a>
-          </Link>
-        </div>
-      ))}
+	  <PostsList posts={posts} />
+
     </div>
   );
 };
