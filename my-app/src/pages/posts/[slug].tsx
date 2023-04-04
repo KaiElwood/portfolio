@@ -1,77 +1,70 @@
-import { allPosts, Post } from "contentlayer/generated";
-import { 
-	GetStaticPathsResult, 
-	GetStaticPropsContext, 
-	GetStaticPropsResult, 
-	InferGetStaticPropsType, 
-	NextPage 
-} from "next";
-import { useMDXComponent } from "next-contentlayer/hooks";
-import { Box } from "@chakra-ui/react";
-import Head from "next/head";
-import Link from "next/link";
+// import { allPosts, Post } from "contentlayer/generated";
+// import { 
+// 	GetStaticPathsResult, 
+// 	GetStaticPropsContext, 
+// 	GetStaticPropsResult, 
+// 	InferGetStaticPropsType, 
+// 	NextPage 
+// } from "next";
+// import { useMDXComponent } from "next-contentlayer/hooks";
+// // import PostLayout from '../../components/Blog'
 
-// Generate static paths for all posts
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-	const paths = allPosts.map((post) => post.url);
+// type PostProps = {
+// 	posty: Post
+//   }
+
+
+// export default function Posty({ posty }: PostProps) {
+// const Component = useMDXComponent(posty.body.code)
+
+// return (
+// 	// <PostLayout {...posty}>
+// 		<Component />
+// 	// </PostLayout>
+// )
+// }
+
+// export async function getStaticPaths() {
+// 	return {
+// 	  paths: allPosts.map((post) => ({ params: { slug: post.slug } })),
+// 	  fallback: false,
+// 	}
+//   }
+  
+//   export async function getStaticProps({ params }) {
+// 	console.log(params);
+// 	const post = allPosts.find((post) => post.slug === params.slug)
+// 	return { props: { post } }
+//   }
+
+import { allPosts, type Post } from "contentlayer/generated"
+import { GetStaticProps, InferGetStaticPropsType } from "next"
+import { useMDXComponent } from "next-contentlayer/hooks"
+ 
+export const getStaticPaths = () => {
 	return {
-	  paths,
+	  paths: allPosts.map((post) => ({params: {slug: post.slug}})),
 	  fallback: false,
-	};
-  }
-
-// Find post with matching slug and return it as props to the page
-export async function getStaticProps({
-	params,
-}: GetStaticPropsContext): Promise<GetStaticPropsResult<{ post: Post }>> {
-	const post = allPosts.find(
-		(post) => post._raw.flattenedPath === params?.slug
-	);
-
-	// redirect to homepage if not found
-	return typeof post === "undefined"
-		? {
-			redirect: {
-				destination: "/about",
-				permanent: false,
-			},
-		}
-		: {
-			props: {
-				post
-			},
-		};
+	}
 }
+ 
+export const getStaticProps: GetStaticProps<{post: Post}> = ({ params }) => {
+	const post = allPosts.find((post) => post.slug === params?.slug)
 
-const PostLayout: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
-	post,
-}) => {
-	// get mdx component for post
-	const Component = useMDXComponent(post.body.code);
+	if (!post) {
+		return { notFound: true }
+	}
+
+	return { props: { post } }
+}
+ 
+export default function SinglePostPage({ post, }: InferGetStaticPropsType<typeof getStaticProps>) {
+	const MDXContent = useMDXComponent(post.body.code)
 	return (
 		<>
-			<Head>
-				<title>{post.title}</title>
-			</Head>
-
-			<article>
-				{/* link back to homepage */}
-				<Box color="red.500">
-					<Link href={"/"} >
-						Home
-					</Link>
-				</Box>
-
-				{/* markdown content */}
-				<div>
-					<h1>{post.title}</h1>
-					<time dateTime={post.date}>{post.date}</time>
-				</div>
-
-				<Component />
-			</article>
+			<div>{post.title}</div>
+			<MDXContent />
 		</>
-	);
-};
+	)
+}
 
-export default PostLayout;

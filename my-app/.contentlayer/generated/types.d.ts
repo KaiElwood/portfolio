@@ -20,7 +20,6 @@ export type Post = {
   /** MDX file body */
   body: MDX
   url: string
-  id: string
   slug: string
 }
 
@@ -32,12 +31,13 @@ export type Project = {
   /** The title of the project */
   title: string
   /** The date of the project */
-  date: string
-  tags?: string | undefined
+  date: IsoDateTimeString
+  tags: string
   image?: string | undefined
   /** MDX file body */
   body: MDX
   url: string
+  slug: string
 }  
 
 /** Nested types */
