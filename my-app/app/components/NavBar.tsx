@@ -4,10 +4,10 @@ import Link from "next/link";
 
 // TODO: figure out what to put for header
 
-const Header = () => {
+const NavBar = () => {
   return (
 	<>
-	<div>This is the header</div>
+	<div>This is the NavBar</div>
 	{/* // hamburger on mobile? how to do... maybe there is a hamburger icon or component with chakraui */}
 		<div>
 			<Link href={"/"}>
@@ -23,9 +23,9 @@ const Header = () => {
 			blog
 			</Link>
 		</div>
-	<div>This is the end of the header</div>
+	<div>This is the end of the NavBar</div>
 	</>
   );
 };
 
-export default Header;
+export default NavBar;

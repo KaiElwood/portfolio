@@ -5,6 +5,7 @@ import { Flex, Box, LinkBox } from "@chakra-ui/react";
 
 const Footer = () => {
   return (
+	<div>this is the footer</div>
 	// hamburger on mobile? how to do... maybe there is a hamburger icon or component with chakraui
 		// <Flex align="left" justify="center">
 		// 	<LinkBox>

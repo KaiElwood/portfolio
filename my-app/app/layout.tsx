@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
-import Header from '../src/components/Header';
+import NavBar from './components/NavBar';
 
 export const metadata: Metadata = {
   title: "Kai's Garden",
@@ -15,9 +15,13 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			hello
-			<Header />
-			<body className={inter.className}>{children}</body>
-		</html>
+    {
+    }
+    <head />
+    <body className={inter.className}>
+		<NavBar />
+		{children}
+	</body>
+    </html>
 	)
 }

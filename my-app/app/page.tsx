@@ -1,10 +1,11 @@
 import PostsList from "src/components/PostsList";
 import ProjectsList from "src/components/ProjectsList";
+import Header from '../src/components/Header';
 
 const Home = () => {
 	return (
 		<div>
-			This is the Home page!
+			<div>This is the Home page!</div>
 			<PostsList numPosts={5}/>
 			{/* <ProjectsList /> */}
 	
