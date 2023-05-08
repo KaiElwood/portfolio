@@ -26,7 +26,13 @@ module.exports = {
 			  },
 			zIndex: {
 				'neg': '-10'
-			}
+			},
+			colors: {
+				'backblack': '#000000c4',
+			  },
+			fontFamily: {
+				harbour: ["HARBOUR", 'sans-serif'],
+			},
 		},
 	},
 	plugins: [],

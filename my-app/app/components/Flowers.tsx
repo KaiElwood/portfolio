@@ -1,13 +1,14 @@
 export async function getData() {
 
 	const ADAFRUIT_IO_USERNAME = 'kai_pie_sky';
-	const ADAFRUIT_IO_KEY = 'aio_dVgI83M0GdNxy08ftifui9vw5D8t';
+	const ADAFRUIT_IO_KEY = 'aio_Tltf14qa2hyFeVYn5XvnR9WhN3kq';
 	const ADAFRUIT_IO_BASE_URL = 'https://io.adafruit.com/api/v2';
 	const headers =  { 'X-AIO-Key': ADAFRUIT_IO_KEY };
 	const response1 = await fetch(`${ADAFRUIT_IO_BASE_URL}/${ADAFRUIT_IO_USERNAME}/feeds/temperature/data`, { headers });
 	const response2 = await fetch(`${ADAFRUIT_IO_BASE_URL}/${ADAFRUIT_IO_USERNAME}/feeds/humidity/data`, { headers });
 	const response3 = await fetch(`${ADAFRUIT_IO_BASE_URL}/${ADAFRUIT_IO_USERNAME}/feeds/pressure/data`, { headers });
 	if (!response1.ok || !response2.ok || !response3.ok) {
+		return ({ humidity: 12, temp: 16, pressure: 1020 });
 		throw new Error('Unable to fetch data');
 	}
 	const temperatureData = await response1.json();

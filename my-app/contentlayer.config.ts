@@ -42,6 +42,11 @@ export const Post = defineDocumentType(() => ({
 		description: "The intro for the post",
 		required: true,
 	  },
+	imgSrc: {
+		type: "string",
+		description: "Image source url",
+		required: true,
+	  },
   },
   computedFields: {
     url: {
@@ -61,19 +66,3 @@ export default makeSource({
   contentDirPath: "data", // Source directory where the content is located
   documentTypes: [Post, Project], // this is where the problem arises
 });
-
-
-// computedFields: {
-// 	url: {
-// 		type: "string",
-// 		resolve: (post) => `/posts/${post._raw.flattenedPath}`,
-// 	},
-// 	id: {
-// 		type: "string",
-// 		resolve: (post) => post._raw.flattenedPath.replace("posts/", ""),
-// 	},
-// 	slug: {
-// 		type: "string",
-// 		resolve: (post) => post._raw.sourceFileName.replace(/\.mdx/, ''),
-// 	},
-// },

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
+/* @layer components {
+	.navbarmenuoptions {
+	  @apply flex-col fixed h-full w-full top-0 left-0 justify-around items-center bg-backblack z-50 text-white font-bold font-4xl
+	}
+  } */
 
-}
+  @font-face {
+	font-family: "HARBOUR";
+	src: url("../public/fonts/HarbourReg.ttf");
+  }

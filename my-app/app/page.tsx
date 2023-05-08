@@ -4,7 +4,7 @@ const Home = () => {
 	return (
 			<div className="flex-grow relative">
 				<div className="mt-[30vh]">
-					<h2 className="text-3xl font-bold">Hi, I'm Kai</h2>
+					<h2 className="text-3xl mb-2 font-harbour">Hi, I'm Kai</h2>
 					<p className="text-lg max-w-prose">Welcome to my garden! Here, you can scroll through my passion projects and explorations in data viz or read my thoughts on saving our planet.</p>
 				</div>
 				<div className="z-neg absolute bottom-0">

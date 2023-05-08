@@ -1,7 +1,7 @@
 const { withContentlayer } = require("next-contentlayer")
  
 const nextConfig = {
-	reactStrictMode: true,
+	reactStrictMode: false,
 	swcMinify: true,
 	experimental: {
 		appDir: true,

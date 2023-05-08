@@ -10,3 +10,5 @@ import { allProjects } from './Project/_index.mjs'
 export { allPosts, allProjects }
 
 export const allDocuments = [...allPosts, ...allProjects]
+
+

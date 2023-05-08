@@ -37,6 +37,16 @@ var Post = defineDocumentType(() => ({
       type: "date",
       description: "The date of the post",
       required: true
+    },
+    intro: {
+      type: "string",
+      description: "The intro for the post",
+      required: true
+    },
+    imgSrc: {
+      type: "string",
+      description: "Image source url",
+      required: true
     }
   },
   computedFields: {
@@ -61,4 +71,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-VJ24QRY5.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-H3KSK5KW.mjs.map
