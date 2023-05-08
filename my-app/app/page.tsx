@@ -1,15 +1,16 @@
-import PostsList from "src/components/PostsList";
-import ProjectsList from "src/components/ProjectsList";
-import Header from '../src/components/Header';
+import FlowerSketch from "./components/FlowerSketch";
 
 const Home = () => {
 	return (
-		<div>
-			<div>This is the Home page!</div>
-			<PostsList numPosts={5}/>
-			{/* <ProjectsList /> */}
-	
-		</div>
+			<div className="flex-grow relative">
+				<div className="mt-[30vh]">
+					<h2 className="text-3xl font-bold">Hi, I'm Kai</h2>
+					<p className="text-lg max-w-prose">Welcome to my garden! Here, you can scroll through my passion projects and explorations in data viz or read my thoughts on saving our planet.</p>
+				</div>
+				<div className="z-neg absolute bottom-0">
+					<FlowerSketch />
+				</div>
+			</div>
 	  );
 }
 

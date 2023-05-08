@@ -1,5 +1,9 @@
 export default function Page() {
 	return(
-		<div>About Me</div>
+		<>
+			<div>This will be an image of me</div>
+			<div>About Me</div>
+		</>
+
 	)
 }
