@@ -2,13 +2,13 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 var Project = defineDocumentType(() => ({
   name: "Project",
-  filePathPattern: `projects/*.mdx`,
+  filePathPattern: `portfolio/*.mdx`,
   // Type of file to parse (every mdx in projects folder)
   contentType: "mdx",
   fields: {
     title: { type: "string", description: "The title of the project", required: true },
     date: { type: "date", description: "The date of the project", required: true },
-    tags: { type: "string", required: true },
+    tags: { type: "string" },
     image: { type: "string" }
   },
   computedFields: {
@@ -24,7 +24,7 @@ var Project = defineDocumentType(() => ({
 }));
 var Post = defineDocumentType(() => ({
   name: "Post",
-  filePathPattern: `posts/*.mdx`,
+  filePathPattern: `blog/*.mdx`,
   // Type of file to parse (every mdx in posts folder)
   contentType: "mdx",
   fields: {
@@ -71,4 +71,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-H3KSK5KW.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-PDAWDVGJ.mjs.map

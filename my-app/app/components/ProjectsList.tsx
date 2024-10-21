@@ -1,11 +1,12 @@
 "use client";
 
-import { Project } from "contentlayer/generated";
+import { Project, Post } from "contentlayer/generated";
 import Link from "next/link";
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { useState } from "react";
+import compareDesc from "date-fns/compareDesc";
 
-type ProjectsListProps = {projects: Project[]}
+type ProjectsListProps = {projects: (Project | Post)[]};
 
 // the parent component of this will be the projects page
 // this component should be projectsSearchbox

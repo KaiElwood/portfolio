@@ -2,12 +2,12 @@ import { defineDocumentType, makeSource } from "contentlayer/source-files";
 
 export const Project = defineDocumentType(() => ({
 	name: "Project",
-	filePathPattern: `projects/*.mdx`, // Type of file to parse (every mdx in projects folder)
+	filePathPattern: `portfolio/*.mdx`, // Type of file to parse (every mdx in projects folder)
 	contentType: 'mdx',
 	fields: {
         title: { type: 'string', description: "The title of the project", required: true },
         date: { type: 'date', description: "The date of the project", required: true },
-        tags: { type: 'string', required: true },
+        tags: { type: 'string', },
         image: { type: 'string' },
 	},
 	computedFields: {
@@ -24,7 +24,7 @@ export const Project = defineDocumentType(() => ({
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
-  filePathPattern: `posts/*.mdx`, // Type of file to parse (every mdx in posts folder)
+  filePathPattern: `blog/*.mdx`, // Type of file to parse (every mdx in posts folder)
   contentType: 'mdx',
   fields: {
     title: {
