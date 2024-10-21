@@ -4,8 +4,10 @@ import { NextReactP5Wrapper } from "@p5-wrapper/next";
 import { getData } from "./Flowers";
 import "./classes.css";
 
-const sketch = (p) => {
-	let temperatureData, humidityData, pressureData;
+import p5 from "p5";
+
+const sketch = (p: p5) => {
+	let temperatureData: number, humidityData: number, pressureData: number;
 	let dataReady = false;
 	const fetchData = async () => {
 		const data = await getData();
@@ -16,6 +18,18 @@ const sketch = (p) => {
 	};
 
 	p.setup = () => {
+		p.drawPlants = () => {
+			p.background(255);
+		
+			const numberOfPlants = p.map(temperatureData, 0, 50, 1, 7);
+			for (let i = 0; i < numberOfPlants; i++) {
+				const x = p.random(p.width);
+				const y = p.height;
+				const size = p.random(30, 200) + p.map(humidityData, 0, 100, 0, 20)
+				// drawPlant(x, y, size);
+				p.makeFlowers(x,y,6,1,size);
+			}
+		};
 		p.createCanvas(800, 300);
 
 		(async () => {
@@ -120,7 +134,7 @@ const sketch = (p) => {
 		p.makePetals(stemPoints[segments], length)
 	  }
 	  
-	  p.makeStems = (x, y, segments, weight, length) => {
+	p.makeStems = (x: number, y: number, segments: number, weight: number, length: number): {x: number, y: number}[] => {
 		p.beginShape()
 		p.noFill()
 		let xoff = 0

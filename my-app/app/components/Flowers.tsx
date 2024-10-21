@@ -3,7 +3,10 @@ export async function getData() {
 	const user = process.env.ADAFRUIT_IO_USERNAME;
 	const key = process.env.ADAFRUIT_IO_KEY;
 	const URL = process.env.ADAFRUIT_IO_BASE_URL;
-	const headers =  { 'X-AIO-Key': key };
+	if (!key) {
+		throw new Error('ADAFRUIT_IO_KEY is not defined');
+	}
+	const headers = { 'X-AIO-Key': key };
 	const response1 = await fetch(`${URL}/${user}/feeds/temperature/data`, { headers });
 	const response2 = await fetch(`${URL}/${user}/feeds/humidity/data`, { headers });
 	const response3 = await fetch(`${URL}/${user}/feeds/pressure/data`, { headers });
