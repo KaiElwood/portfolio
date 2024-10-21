@@ -8,7 +8,23 @@
 	}
   } */
 
-  @font-face {
+@font-face {
 	font-family: "HARBOUR";
 	src: url("../public/fonts/HarbourReg.ttf");
+}
+
+@define-mixin breakpoint $size {
+  @media (max-width: $(size)) {
+    @mixin-content;
   }
+}
+
+.text-container-main { 
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 90%;
+
+	@mixin breakpoint 500px {
+		margin-left: 0;
+	}
+}

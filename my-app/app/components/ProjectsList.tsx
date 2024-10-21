@@ -1,6 +1,8 @@
+"use client";
+
 import { Project } from "contentlayer/generated";
 import Link from "next/link";
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { useState } from "react";
 
 type ProjectsListProps = {projects: Project[]}

@@ -8,7 +8,7 @@ export default function Page() {
 			<h2 className="text-3xl font-bold pb-2 border-b mb-5">
 				About Me
 			</h2>
-			<div className="flex gap-4 flex-wrap p-4 m-10 box relative bg-[rgba(255, 100, 101, 1)]">
+			<div className="flex gap-4 flex-wrap p-4 m-10 relative bg-[rgba(255, 100, 101, 1)]">
 				<div className='w-96 h-96 relative grow basis-full lg:basis-1/2'>
 					<Image 
 						fill
@@ -22,6 +22,5 @@ export default function Page() {
 					</p>
 			</div>
 		</div>
-
 	)
 }

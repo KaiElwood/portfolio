@@ -1,12 +1,14 @@
 import { format, parseISO } from 'date-fns'
-import { allPosts } from 'contentlayer/generated'
+import { Post, allPosts } from 'contentlayer/generated'
 import { useMDXComponent } from 'next-contentlayer/hooks'
+
+// this creates the static paths for the posts
 
 export const generateStaticParams = async () => allPosts.map((post) => ({ slug: post.slug }))
 
 export const generateMetadata = ({ params }) => {
-  const post = allPosts.find((post) => post.slug === params.slug)
-  return { title: post.title }
+  const post: Post | undefined = allPosts.find((post) => post.slug === params.slug)
+  return { title: post?.title }
 }
 
 const PostLayout = ({ params }: { params: { slug: string } }) => {

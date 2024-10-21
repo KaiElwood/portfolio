@@ -25,7 +25,6 @@
     top: 20px;
     left: 20px;
     --b: 10;
-    /* --color: blue; */
     border-width: 0 calc(var(--b)*1px) calc(var(--b)*1px) 0;
     background: var(--color);
     z-index: -1;
@@ -37,9 +36,11 @@
 
 .box:hover:after {
 	--b:10; 
+	--color: #FF6465;
+
 	border-width:0 calc(var(--b)*1px) calc(var(--b)*1px) 0;
 
-	border-image:repeating-linear-gradient(-45deg,#0000 0 4px,blue 0 8px) var(--b);
+	border-image:repeating-linear-gradient(-45deg,#0000 0 4px,color 0 8px) var(--b);
 
 	clip-path:polygon(0 0,calc(100% - calc(var(--b)*1px)) 0,calc(100% - calc(var(--b)*1px)) calc(var(--b)*1px),100% calc(var(--b)*1px),100% 100%,calc(var(--b)*1px) 100%,calc(var(--b)*1px) calc(100% - calc(var(--b)*1px)),0 calc(100% - calc(var(--b)*1px)))
 }

@@ -19,7 +19,7 @@ const PostCard = (post: Post) => {
 						style={{objectFit: "cover"}}
 					/>
 				</div>
-				<h3 className="text-xl mt-2 font-bold text-blue-700 hover:text-blue-900">
+				<h3 className="text-xl mt-2 font-bold text-black-700 hover:text-slate-700">
 				<Link href={post.url} legacyBehavior>
 					{post.title}
 				</Link>

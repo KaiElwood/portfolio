@@ -1,12 +1,12 @@
 export async function getData() {
 
-	const ADAFRUIT_IO_USERNAME = 'kai_pie_sky';
-	const ADAFRUIT_IO_KEY = 'aio_Tltf14qa2hyFeVYn5XvnR9WhN3kq';
-	const ADAFRUIT_IO_BASE_URL = 'https://io.adafruit.com/api/v2';
-	const headers =  { 'X-AIO-Key': ADAFRUIT_IO_KEY };
-	const response1 = await fetch(`${ADAFRUIT_IO_BASE_URL}/${ADAFRUIT_IO_USERNAME}/feeds/temperature/data`, { headers });
-	const response2 = await fetch(`${ADAFRUIT_IO_BASE_URL}/${ADAFRUIT_IO_USERNAME}/feeds/humidity/data`, { headers });
-	const response3 = await fetch(`${ADAFRUIT_IO_BASE_URL}/${ADAFRUIT_IO_USERNAME}/feeds/pressure/data`, { headers });
+	const user = process.env.ADAFRUIT_IO_USERNAME;
+	const key = process.env.ADAFRUIT_IO_KEY;
+	const URL = process.env.ADAFRUIT_IO_BASE_URL;
+	const headers =  { 'X-AIO-Key': key };
+	const response1 = await fetch(`${URL}/${user}/feeds/temperature/data`, { headers });
+	const response2 = await fetch(`${URL}/${user}/feeds/humidity/data`, { headers });
+	const response3 = await fetch(`${URL}/${user}/feeds/pressure/data`, { headers });
 	if (!response1.ok || !response2.ok || !response3.ok) {
 		return ({ humidity: 12, temp: 16, pressure: 1020 });
 		throw new Error('Unable to fetch data');

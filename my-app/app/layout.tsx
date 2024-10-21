@@ -4,7 +4,6 @@ import Footer from './components/Footer';
 const work = Work_Sans({ subsets: ['latin'] });
 import NavBar from './components/NavBar';
 import "./globals.css";
-// import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: "Kai's Garden",
@@ -22,7 +21,7 @@ export default function RootLayout({
     }
     <head />
     <body className={work.className}>
-			<div className="md:max-w-xl lg:max-w-5xl min-h-screen m-auto grid grid-rows-footer">
+			<div className="md:max-w-2xl lg:max-w-5xl min-h-screen m-auto grid grid-rows-footer">
 				<NavBar />
 				{children}
 				<Footer />
