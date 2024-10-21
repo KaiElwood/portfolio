@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
-import { Post } from 'contentlayer/generated'
+import { Project } from 'contentlayer/generated'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import Image from 'next/image'
 
 
-const PostCard = (post: Post) => {
+const PostCard = (post: Project) => {
 	const Content = useMDXComponent(post.body.code)
   
 	return (
@@ -15,7 +15,7 @@ const PostCard = (post: Post) => {
 					<Image 
 						fill
 						src={post.imgSrc}
-						alt={post.intro}
+						alt={post.title}
 						style={{objectFit: "cover"}}
 					/>
 				</div>
@@ -28,7 +28,7 @@ const PostCard = (post: Post) => {
 				{format(parseISO(post.date), 'LLLL d, yyyy')}
 				</time>
 				<p className='text-sm'>
-					{post.intro}
+					{post.title}
 				</p>
 				{/* <div className="text-sm">
 				<Content />

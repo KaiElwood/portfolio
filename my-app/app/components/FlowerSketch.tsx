@@ -23,6 +23,24 @@ const sketch = (p) => {
 		  })();
 	}
 
+	// TODO: draw plants slowly depending on data, 
+	// then rotate flowers around plants and slowly move them from side to side
+
+	// drawplants could return the end coordinates of each plant stem
+	// plant return data would be like:
+	// { 
+	//  stem: {
+	// 	 point1: {x: 0, y: 0}, 
+	// 	 point2: {x: 0, y: 0}, 
+	// 	 point3: {x: 0, y: 0}, 
+	//	},
+	//  flowers: {x: 0, y: 0},
+	// }
+	// could then slowly "grow" the flowers from the end of the stem
+	// could then rotate the flowers around the stem
+	// each creation of a flower would turn into a generation of a flower data
+	// then code would change everything else
+
 	p.draw = () => {
 		if(dataReady) {
 			p.drawPlants();

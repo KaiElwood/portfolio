@@ -1,5 +1,16 @@
 import FlowerSketch from "./components/FlowerSketch";
 
+// TODO: (cody)
+// Use React's Context API to create a global state for the garden's position.
+// Wrap your app with this context provider.
+// In your FlowerSketch component, read from and update this global state.
+// Only initialize the garden position if it hasn't been set yet.
+
+// Basically, instead of writing the garden from scratch
+// I can save the results of the garden as well as their progress toward fully bloomed
+// Then I can use the context API to keep track of the garden's state
+// Then I can relay that info back to p5
+
 const Home = () => {
 	return (
 			<div className="flex-grow relative">

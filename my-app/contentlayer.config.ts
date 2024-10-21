@@ -8,7 +8,11 @@ export const Project = defineDocumentType(() => ({
         title: { type: 'string', description: "The title of the project", required: true },
         date: { type: 'date', description: "The date of the project", required: true },
         tags: { type: 'string', },
-        image: { type: 'string' },
+				imgSrc: {
+					type: "string",
+					description: "Image source url",
+					required: true,
+					},
 	},
 	computedFields: {
 	  url: {

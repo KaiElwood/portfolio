@@ -9,7 +9,11 @@ var Project = defineDocumentType(() => ({
     title: { type: "string", description: "The title of the project", required: true },
     date: { type: "date", description: "The date of the project", required: true },
     tags: { type: "string" },
-    image: { type: "string" }
+    imgSrc: {
+      type: "string",
+      description: "Image source url",
+      required: true
+    }
   },
   computedFields: {
     url: {
@@ -71,4 +75,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-PDAWDVGJ.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-OGTORULQ.mjs.map

@@ -37,7 +37,8 @@ export type Project = {
   /** The date of the project */
   date: IsoDateTimeString
   tags?: string | undefined
-  image?: string | undefined
+  /** Image source url */
+  imgSrc: string
   /** MDX file body */
   body: MDX
   url: string
