@@ -1,4 +1,6 @@
 import FlowerSketch from "./components/FlowerSketch";
+import { Space_Mono } from 'next/font/google';
+const space = Space_Mono({ subsets: ["latin"], weight: ["700", "400"] });
 
 // TODO: (cody)
 // Use React's Context API to create a global state for the garden's position.
@@ -15,7 +17,7 @@ const Home = () => {
 	return (
 			<div className="flex-grow relative">
 				<div className="text-container-main mt-[30vh]">
-					<h2 className="text-3xl mb-2 leading-10 font-harbour">Hi, I'm Kai</h2>
+					<h2 className={`text-3xl font-bold mb-2 leading-10 ${space}`}>Hi, I'm Kai</h2>
 					<p className="text-lg leading-8 max-w-prose">Welcome to my garden! Here, you can scroll through my passion projects and explorations in data viz or read my thoughts on saving our planet.</p>
 				</div>
 				<div className="z-neg absolute bottom-0">

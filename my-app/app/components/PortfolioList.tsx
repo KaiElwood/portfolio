@@ -2,12 +2,11 @@
 
 import { Project, Post } from "contentlayer/generated";
 import Link from "next/link";
-import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import { useState } from "react";
 import compareDesc from "date-fns/compareDesc";
 import PostCard from "./PostCard";
 
-type PortfolioListProps = {projects: (Project | Post)[]};
+type PortfolioListProps = {projects: Project[]};
 
 // the parent component of this will be the projects page
 // this component should be projectsSearchbox
@@ -15,6 +14,7 @@ type PortfolioListProps = {projects: (Project | Post)[]};
 // it will have a child component of projects list, with different fields for each project
 
 const PortfolioList = ({ projects }: PortfolioListProps) => {
+	projects.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 	const [filteredProjects, setFilteredProjects] = useState(projects);
 	const [filterTerm, setFilterTerm] = useState('');
 

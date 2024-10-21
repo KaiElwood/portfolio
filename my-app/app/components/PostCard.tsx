@@ -27,12 +27,16 @@ const PostCard = (post: Project) => {
 				<time dateTime={post.date} className="block mb-4 text-xs text-gray-600">
 				{format(parseISO(post.date), 'LLLL d, yyyy')}
 				</time>
-				<p className='text-sm'>
-					{post.title}
-				</p>
 				{/* <div className="text-sm">
 				<Content />
 				</div> */}
+				<div className="mt-auto pt-4 flex flex-wrap gap-1">
+					{(post.tags ?? '').split(',').map((tag, idx) => (
+						<span key={idx} className="inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-600 mr-1 mb-2">
+							{tag}
+						</span>
+					))}
+				</div>
 			</div>
 		</Link>
 	)

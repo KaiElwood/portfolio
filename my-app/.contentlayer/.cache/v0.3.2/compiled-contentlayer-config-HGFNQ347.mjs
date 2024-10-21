@@ -12,7 +12,8 @@ var Project = defineDocumentType(() => ({
     imgSrc: {
       type: "string",
       description: "Image source url",
-      required: true
+      required: false,
+      default: "/imgs/placeholder.webp"
     }
   },
   computedFields: {
@@ -75,4 +76,4 @@ export {
   Project,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-OGTORULQ.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-HGFNQ347.mjs.map

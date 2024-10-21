@@ -1,5 +1,5 @@
 import { Post } from "contentlayer/generated";
-import { compareDesc } from 'date-fns'
+import { compareDesc, format, parseISO } from 'date-fns'
 import PostCard from "./PostCard";
 import "./classes.css";
 
@@ -13,11 +13,13 @@ const BlogList = ({ posts }: BlogListProps) => {
 	return (
 		<>
 			<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
-				{postsSorted.map((project, idx) => (
-					<div style={{ width: '100%', margin: '8px' }} key={idx}>
-						<a href={project.url}>
-							{project.title}
-							<span style={{ paddingLeft: '12px' }}>{project.date}</span>
+				{postsSorted.map((post, idx) => (
+					<div className="my-2" style={{ width: '100%' }} key={idx}>
+						<a className="flex justify-between" href={post.url}>
+							<span className="font-semibold">{post.title}</span>
+							<time style={{ paddingLeft: '12px' }} dateTime={post.date}>
+								{format(parseISO(post.date), 'LLLL d, yyyy')}
+							</time>
 						</a>
 					</div>
 				))}
