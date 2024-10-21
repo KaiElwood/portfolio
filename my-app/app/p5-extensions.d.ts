@@ -1,4 +1,4 @@
-import * as p5 from 'p5';
+import { _ } from "@p5-wrapper/react";
 
 declare module 'p5' {
   interface p5InstanceExtensions {

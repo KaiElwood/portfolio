@@ -1,12 +1,12 @@
-import Link from 'next/link'
-import { format, parseISO } from 'date-fns'
-import { Project } from 'contentlayer/generated'
-import { useMDXComponent } from 'next-contentlayer/hooks'
-import Image from 'next/image'
+import Link from 'next/link';
+import { format, parseISO } from 'date-fns';
+import { Project } from 'contentlayer/generated';
+import { useMDXComponent } from 'next-contentlayer/hooks';
+import Image from 'next/image';
 
 
 const PostCard = (post: Project) => {
-	const Content = useMDXComponent(post.body.code)
+	const Content = useMDXComponent(post.body.code);
   
 	return (
 		<Link href={post.url} legacyBehavior>
@@ -39,7 +39,7 @@ const PostCard = (post: Project) => {
 				</div>
 			</div>
 		</Link>
-	)
-  }
+	);
+  };
 
-export default PostCard
+export default PostCard;

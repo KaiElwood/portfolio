@@ -12,7 +12,7 @@ export default function Page() {
 				<div className='w-96 h-96 relative grow basis-full lg:basis-1/2'>
 					<Image 
 						fill
-						src={"/../public/imgs/kai_side.JPG"}
+						src={"/imgs/kai_side.JPG"}
 						alt={"Kai Elwood-Dieu"}
 						style={{objectFit: "cover"}}
 					/>
@@ -22,5 +22,5 @@ export default function Page() {
 					</p>
 			</div>
 		</div>
-	)
+	);
 }

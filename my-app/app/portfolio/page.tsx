@@ -10,5 +10,5 @@ export default function Page() {
 				<PortfolioList projects={allProjects}/>				
 			</div>
 		</div>
-	)
+	);
 }

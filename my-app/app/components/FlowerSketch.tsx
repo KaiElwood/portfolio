@@ -1,12 +1,16 @@
-"use client";
-import React from "react";
-import { NextReactP5Wrapper } from "@p5-wrapper/next";
+import dynamic from 'next/dynamic';
+
+import React, { useEffect } from "react";
+import { P5CanvasInstance, type Sketch } from "@p5-wrapper/react";
 import { getData } from "./Flowers";
 import "./classes.css";
 
-import p5 from "p5";
+const NextReactP5Wrapper = dynamic(() => import('@p5-wrapper/next').then(mod => mod.NextReactP5Wrapper), {
+	ssr: false
+});
 
-const sketch = (p: p5) => {
+const sketch: Sketch = (p: P5CanvasInstance) => {
+	console.log("this is working");
 	let temperatureData: number, humidityData: number, pressureData: number;
 	let dataReady = false;
 	const fetchData = async () => {
@@ -14,27 +18,19 @@ const sketch = (p: p5) => {
 		temperatureData = data.temp;
 		humidityData = data.humidity;
 		pressureData = data.pressure;
-		dataReady = true;
 	};
 
 	p.setup = () => {
-		p.drawPlants = () => {
-			p.background(255);
-		
-			const numberOfPlants = p.map(temperatureData, 0, 50, 1, 7);
-			for (let i = 0; i < numberOfPlants; i++) {
-				const x = p.random(p.width);
-				const y = p.height;
-				const size = p.random(30, 200) + p.map(humidityData, 0, 100, 0, 20)
-				// drawPlant(x, y, size);
-				p.makeFlowers(x,y,6,1,size);
-			}
-		};
+		console.log('p5 setup is running');
 		p.createCanvas(800, 300);
 
-		(async () => {
-			await fetchData();
-		  })();
+		temperatureData = 24;
+		humidityData = 80;
+		pressureData = 900;
+		dataReady = true;
+		// (async () => {
+		// 	await fetchData();
+		//   })();
 	}
 
 	// TODO: draw plants slowly depending on data, 
@@ -56,6 +52,7 @@ const sketch = (p: p5) => {
 	// then code would change everything else
 
 	p.draw = () => {
+		p.rect(50, 50, 100, 100);  
 		if(dataReady) {
 			p.drawPlants();
 			p.noLoop();
@@ -175,5 +172,5 @@ const sketch = (p: p5) => {
 export default function FlowerSketch() {
     return (
         <NextReactP5Wrapper sketch={sketch} />
-    )
+    );
 }

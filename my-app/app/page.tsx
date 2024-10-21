@@ -1,5 +1,9 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import FlowerSketch from "./components/FlowerSketch";
 import { Space_Mono } from 'next/font/google';
+import { useState } from "react";
 const space = Space_Mono({ subsets: ["latin"], weight: ["700", "400"] });
 
 // TODO: (cody)
@@ -13,7 +17,12 @@ const space = Space_Mono({ subsets: ["latin"], weight: ["700", "400"] });
 // Then I can use the context API to keep track of the garden's state
 // Then I can relay that info back to p5
 
+const DynamicFlowerSketch = dynamic(() => import('./components/FlowerSketch'), {
+  ssr: false,
+});
+
 const Home = () => {
+	const [isLoading, setIsLoading] = useState(true);
 	return (
 			<div className="flex-grow relative">
 				<div className="text-container-main mt-[30vh]">
@@ -21,11 +30,12 @@ const Home = () => {
 					<p className="text-lg leading-8 max-w-prose">Welcome to my garden! Here, you can scroll through my passion projects and explorations in data viz or read my thoughts on saving our planet.</p>
 				</div>
 				<div className="z-neg absolute bottom-0">
-					<FlowerSketch />
+					<DynamicFlowerSketch />
+					{/* <DynamicP5Wrapper setIsLoading={setIsLoading} /> */}
 				</div>
 			</div>
 	  );
-}
+};
 
 export default Home;
 

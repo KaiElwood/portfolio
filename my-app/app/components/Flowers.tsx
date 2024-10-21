@@ -1,9 +1,11 @@
 export async function getData() {
-
+	console.log('this should be working here!');
 	const user = process.env.ADAFRUIT_IO_USERNAME;
 	const key = process.env.ADAFRUIT_IO_KEY;
 	const URL = process.env.ADAFRUIT_IO_BASE_URL;
+	console.log('this should be working here!');
 	if (!key) {
+		console.log("an error is occuring");
 		throw new Error('ADAFRUIT_IO_KEY is not defined');
 	}
 	const headers = { 'X-AIO-Key': key };

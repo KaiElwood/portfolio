@@ -1,26 +1,23 @@
-import { format, parseISO } from 'date-fns'
-import { Project, allProjects } from 'contentlayer/generated'
-import { useMDXComponent } from 'next-contentlayer/hooks'
-import { MetadataParams } from 'app/types/MetadataParams'
+import { format, parseISO } from 'date-fns';
+import { Project, allProjects } from 'contentlayer/generated';
+import { useMDXComponent } from 'next-contentlayer/hooks';
+import { MetadataParams } from 'app/types/MetadataParams';
 
-// this creates the static paths for the projects
-
-export const generateStaticParams = async () => allProjects.map((project) => ({ slug: project.slug }))
+export const generateStaticParams = async () => allProjects.map((project) => ({ slug: project.slug }));
 
 export const generateMetadata = ({ params }: {params: MetadataParams}) => {
-  const project: Project | undefined = allProjects.find((project) => project.slug === params.slug)
-  return { title: project?.title }
-}
+  const project: Project | undefined = allProjects.find((project) => project.slug === params.slug);
+  return { title: project?.title };
+};
 
-const projectLayout = ({ params }: { params: { slug: string } }) => {
-  const project = allProjects.find((project) => project.slug === params.slug)
+const ProjectLayout = ({ params }: { params: { slug: string } }) => {
+  const project = allProjects.find((project) => project.slug === params.slug);
+  const Content = useMDXComponent(project?.body.code || '');
 
   if(!project) {
 	// TODO: Return 401 error page not found on page load error
-	return (<>error</>)
+	return (<>error</>);
   }
-
-  const Content = useMDXComponent(project.body.code)
 
   return (
     <article className="py-8 mx-auto max-w-xl">
@@ -32,8 +29,8 @@ const projectLayout = ({ params }: { params: { slug: string } }) => {
       </div>
       <Content />
     </article>
-  )
-}
+  );
+};
 
-export default projectLayout
+export default ProjectLayout;
 

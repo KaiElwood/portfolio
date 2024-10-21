@@ -1,5 +1,5 @@
 import { Post } from "contentlayer/generated";
-import { compareDesc, format, parseISO } from 'date-fns'
+import { compareDesc, format, parseISO } from 'date-fns';
 import PostCard from "./PostCard";
 import "./classes.css";
 
@@ -9,7 +9,7 @@ type BlogListProps = { posts: Post[] }
 // connect to PostCard 
 
 const BlogList = ({ posts }: BlogListProps) => {
-	const postsSorted = posts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
+	const postsSorted = posts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 	return (
 		<>
 			<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>

@@ -1,4 +1,4 @@
-const { withContentlayer } = require("next-contentlayer")
+const { withContentlayer } = require("next-contentlayer");
  
 const nextConfig = {
 	reactStrictMode: false,
@@ -6,6 +6,6 @@ const nextConfig = {
 	experimental: {
 		appDir: true,
 	}
-}
+};
  
-module.exports = withContentlayer(nextConfig)
+module.exports = withContentlayer(nextConfig);
