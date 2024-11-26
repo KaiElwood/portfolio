@@ -1,0 +1,5 @@
+@define-mixin breakpoint $size {
+  @media (min-width: $(size)) {
+    @mixin-content;
+  }
+}

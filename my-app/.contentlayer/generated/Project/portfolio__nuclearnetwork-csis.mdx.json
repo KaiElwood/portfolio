@@ -1,0 +1,21 @@
+{
+  "title": "CSIS Nuclear Network Website",
+  "date": "2021-10-20T04:00:00.000Z",
+  "tags": "front-end, JS, PHP",
+  "imgSrc": "/imgs/nuclear-network-home.png",
+  "body": {
+    "raw": "\nI worked on this website during my time as an intern with CSIS (Center for Strategic and International Studies). The backend was built using PHP and the front-end was built using HTML, CSS, and JS. The website is currently used by the Project on Nuclear Issues, a program launched in 2003 to develop the next generation of policy, technical and operational nuclear professionals through outreach, mentorship, research and debate. You can access the website here: [Project on Nuclear Issues](https://nuclearnetwork.csis.org/).\n\nDuring this process, I learned best practices for css, including mixins, consistent variables and the importance of responsive design. Our design team did an excellent job of providing specifications, which made the development process a lot easier. I also learned how much easier it is to use reusable font names and components, as opposed to the gobbledygook I had been writing in most of my student projects up until that point :). \n\nThis was one of many projects for programs that I worked on at CSIS, but it was also one of the projects where I was pretty much involved from start to finish. CSIS is a great place to work!",
+    "code": "var Component=(()=>{var u=Object.create;var r=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var m=Object.getOwnPropertyNames;var g=Object.getPrototypeOf,f=Object.prototype.hasOwnProperty;var w=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),b=(t,e)=>{for(var o in e)r(t,o,{get:e[o],enumerable:!0})},i=(t,e,o,a)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let s of m(e))!f.call(t,s)&&s!==o&&r(t,s,{get:()=>e[s],enumerable:!(a=p(e,s))||a.enumerable});return t};var S=(t,e,o)=>(o=t!=null?u(g(t)):{},i(e||!t||!t.__esModule?r(o,\"default\",{value:t,enumerable:!0}):o,t)),I=t=>i(r({},\"__esModule\",{value:!0}),t);var d=w((k,c)=>{c.exports=_jsx_runtime});var j={};b(j,{default:()=>l,frontmatter:()=>x});var n=S(d()),x={title:\"CSIS Nuclear Network Website\",date:\"October 20, 2021\",tags:\"front-end, JS, PHP\",imgSrc:\"/imgs/nuclear-network-home.png\"};function h(t){let e={a:\"a\",p:\"p\",...t.components};return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsxs)(e.p,{children:[\"I worked on this website during my time as an intern with CSIS (Center for Strategic and International Studies). The backend was built using PHP and the front-end was built using HTML, CSS, and JS. The website is currently used by the Project on Nuclear Issues, a program launched in 2003 to develop the next generation of policy, technical and operational nuclear professionals through outreach, mentorship, research and debate. You can access the website here: \",(0,n.jsx)(e.a,{href:\"https://nuclearnetwork.csis.org/\",children:\"Project on Nuclear Issues\"}),\".\"]}),`\n`,(0,n.jsx)(e.p,{children:\"During this process, I learned best practices for css, including mixins, consistent variables and the importance of responsive design. Our design team did an excellent job of providing specifications, which made the development process a lot easier. I also learned how much easier it is to use reusable font names and components, as opposed to the gobbledygook I had been writing in most of my student projects up until that point :).\"}),`\n`,(0,n.jsx)(e.p,{children:\"This was one of many projects for programs that I worked on at CSIS, but it was also one of the projects where I was pretty much involved from start to finish. CSIS is a great place to work!\"})]})}function l(t={}){let{wrapper:e}=t.components||{};return e?(0,n.jsx)(e,{...t,children:(0,n.jsx)(h,{...t})}):h(t)}return I(j);})();\n;return Component;"
+  },
+  "_id": "portfolio/nuclearnetwork-csis.mdx",
+  "_raw": {
+    "sourceFilePath": "portfolio/nuclearnetwork-csis.mdx",
+    "sourceFileName": "nuclearnetwork-csis.mdx",
+    "sourceFileDir": "portfolio",
+    "contentType": "mdx",
+    "flattenedPath": "portfolio/nuclearnetwork-csis"
+  },
+  "type": "Project",
+  "url": "/portfolio/nuclearnetwork-csis",
+  "slug": "nuclearnetwork-csis"
+}

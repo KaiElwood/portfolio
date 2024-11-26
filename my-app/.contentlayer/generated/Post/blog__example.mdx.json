@@ -1,0 +1,21 @@
+{
+  "title": "Lorem Ipsum",
+  "date": "2021-12-24T00:00:00.000Z",
+  "intro": "This is loren ipsum text. I feel good when I read lorem ipsum text.",
+  "imgSrc": "/../public/imgs/kai.JPG",
+  "body": {
+    "raw": "\nUllamco et nostrud magna commodo nostrud occaecat quis pariatur id ipsum. Ipsum\nconsequat enim id excepteur consequat nostrud esse esse fugiat dolore.\nReprehenderit occaecat exercitation non cupidatat in eiusmod laborum ex eu\nfugiat aute culpa pariatur. Irure elit proident consequat veniam minim ipsum ex\npariatur.\n\nMollit nisi cillum exercitation minim officia velit laborum non Lorem\nadipisicing dolore. Labore commodo consectetur commodo velit adipisicing irure\ndolore dolor reprehenderit aliquip. Reprehenderit cillum mollit eiusmod\nexcepteur elit ipsum aute pariatur in. Cupidatat ex culpa velit culpa ad non\nlabore exercitation irure laborum.\n",
+    "code": "var Component=(()=>{var p=Object.create;var r=Object.defineProperty;var d=Object.getOwnPropertyDescriptor;var x=Object.getOwnPropertyNames;var f=Object.getPrototypeOf,g=Object.prototype.hasOwnProperty;var h=(e,i)=>()=>(i||e((i={exports:{}}).exports,i),i.exports),_=(e,i)=>{for(var n in i)r(e,n,{get:i[n],enumerable:!0})},u=(e,i,n,a)=>{if(i&&typeof i==\"object\"||typeof i==\"function\")for(let o of x(i))!g.call(e,o)&&o!==n&&r(e,o,{get:()=>i[o],enumerable:!(a=d(i,o))||a.enumerable});return e};var b=(e,i,n)=>(n=e!=null?p(f(e)):{},u(i||!e||!e.__esModule?r(n,\"default\",{value:e,enumerable:!0}):n,e)),j=e=>u(r({},\"__esModule\",{value:!0}),e);var m=h((L,c)=>{c.exports=_jsx_runtime});var I={};_(I,{default:()=>l,frontmatter:()=>q});var t=b(m()),q={title:\"Lorem Ipsum\",date:\"2021-12-24\",intro:\"This is loren ipsum text. I feel good when I read lorem ipsum text.\",imgSrc:\"/../public/imgs/kai.JPG\"};function s(e){let i={p:\"p\",...e.components};return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(i.p,{children:`Ullamco et nostrud magna commodo nostrud occaecat quis pariatur id ipsum. Ipsum\nconsequat enim id excepteur consequat nostrud esse esse fugiat dolore.\nReprehenderit occaecat exercitation non cupidatat in eiusmod laborum ex eu\nfugiat aute culpa pariatur. Irure elit proident consequat veniam minim ipsum ex\npariatur.`}),`\n`,(0,t.jsx)(i.p,{children:`Mollit nisi cillum exercitation minim officia velit laborum non Lorem\nadipisicing dolore. Labore commodo consectetur commodo velit adipisicing irure\ndolore dolor reprehenderit aliquip. Reprehenderit cillum mollit eiusmod\nexcepteur elit ipsum aute pariatur in. Cupidatat ex culpa velit culpa ad non\nlabore exercitation irure laborum.`})]})}function l(e={}){let{wrapper:i}=e.components||{};return i?(0,t.jsx)(i,{...e,children:(0,t.jsx)(s,{...e})}):s(e)}return j(I);})();\n;return Component;"
+  },
+  "_id": "blog/example.mdx",
+  "_raw": {
+    "sourceFilePath": "blog/example.mdx",
+    "sourceFileName": "example.mdx",
+    "sourceFileDir": "blog",
+    "contentType": "mdx",
+    "flattenedPath": "blog/example"
+  },
+  "type": "Post",
+  "url": "/blog/example",
+  "slug": "example"
+}

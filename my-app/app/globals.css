@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @layer components {
+	.navbarmenuoptions {
+	  @apply flex-col fixed h-full w-full top-0 left-0 justify-around items-center bg-backblack z-50 text-white font-bold font-4xl
+	}
+  } */
+
+@font-face {
+	font-family: "HARBOUR";
+	src: url("../public/fonts/HarbourReg.ttf");
+}
+
+@define-mixin breakpoint $size {
+  @media (max-width: $(size)) {
+    @mixin-content;
+  }
+}
+
+.text-container-main { 
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 90%;
+
+	@mixin breakpoint 500px {
+		margin-left: 0;
+	}
+}

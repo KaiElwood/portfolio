@@ -1,0 +1,21 @@
+{
+  "title": "CSIS Hurricane Impact Data Viz",
+  "date": "2021-09-28T04:00:00.000Z",
+  "tags": "front-end, JS, D3, React",
+  "imgSrc": "/imgs/hurricanes.png",
+  "body": {
+    "raw": "[![Hurricanes data viz](/imgs/hurricanes.png)](https://www.csis.org/analysis/digital-transformation-western-hemisphere)\nI developed this data visualization for an article on the impact of hurricanes on regional economies in South America. The visualization was built using highcharts. \n\nThe data was generated from the CSIS Americas program, which explores the financial impact of climate change on the Americas in an article about digital transformation in the Americas. \n\nThe visualization shows the number of hurricanes per year, the deaths cause by each hurricane, and the economic damage of each hurricane, using circle size, color, and position as variables. sourced from the National Oceanic and Atmospheric Administration (NOAA) and the US Department of Commerce. The visualization shows the number of hurricanes that have hit the US since 1900, the number of deaths and the economic impact of each hurricane. \n\nYou can see the rest of the article here: [CSIS Americas Article](https://www.csis.org/analysis/digital-transformation-western-hemisphere)",
+    "code": "var Component=(()=>{var u=Object.create;var r=Object.defineProperty;var d=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var f=Object.getPrototypeOf,g=Object.prototype.hasOwnProperty;var w=(a,e)=>()=>(e||a((e={exports:{}}).exports,e),e.exports),S=(a,e)=>{for(var i in e)r(a,i,{get:e[i],enumerable:!0})},c=(a,e,i,s)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let n of p(e))!g.call(a,n)&&n!==i&&r(a,n,{get:()=>e[n],enumerable:!(s=d(e,n))||s.enumerable});return a};var x=(a,e,i)=>(i=a!=null?u(f(a)):{},c(e||!a||!a.__esModule?r(i,\"default\",{value:a,enumerable:!0}):i,a)),A=a=>c(r({},\"__esModule\",{value:!0}),a);var h=w((_,o)=>{o.exports=_jsx_runtime});var v={};S(v,{default:()=>l,frontmatter:()=>b});var t=x(h()),b={title:\"CSIS Hurricane Impact Data Viz\",date:\"September 28, 2021\",tags:\"front-end, JS, D3, React\",imgSrc:\"/imgs/hurricanes.png\"};function m(a){let e={a:\"a\",img:\"img\",p:\"p\",...a.components};return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsxs)(e.p,{children:[(0,t.jsx)(e.a,{href:\"https://www.csis.org/analysis/digital-transformation-western-hemisphere\",children:(0,t.jsx)(e.img,{src:\"/imgs/hurricanes.png\",alt:\"Hurricanes data viz\"})}),`\nI developed this data visualization for an article on the impact of hurricanes on regional economies in South America. The visualization was built using highcharts.`]}),`\n`,(0,t.jsx)(e.p,{children:\"The data was generated from the CSIS Americas program, which explores the financial impact of climate change on the Americas in an article about digital transformation in the Americas.\"}),`\n`,(0,t.jsx)(e.p,{children:\"The visualization shows the number of hurricanes per year, the deaths cause by each hurricane, and the economic damage of each hurricane, using circle size, color, and position as variables. sourced from the National Oceanic and Atmospheric Administration (NOAA) and the US Department of Commerce. The visualization shows the number of hurricanes that have hit the US since 1900, the number of deaths and the economic impact of each hurricane.\"}),`\n`,(0,t.jsxs)(e.p,{children:[\"You can see the rest of the article here: \",(0,t.jsx)(e.a,{href:\"https://www.csis.org/analysis/digital-transformation-western-hemisphere\",children:\"CSIS Americas Article\"})]})]})}function l(a={}){let{wrapper:e}=a.components||{};return e?(0,t.jsx)(e,{...a,children:(0,t.jsx)(m,{...a})}):m(a)}return A(v);})();\n;return Component;"
+  },
+  "_id": "portfolio/hurricanes-csis.mdx",
+  "_raw": {
+    "sourceFilePath": "portfolio/hurricanes-csis.mdx",
+    "sourceFileName": "hurricanes-csis.mdx",
+    "sourceFileDir": "portfolio",
+    "contentType": "mdx",
+    "flattenedPath": "portfolio/hurricanes-csis"
+  },
+  "type": "Project",
+  "url": "/portfolio/hurricanes-csis",
+  "slug": "hurricanes-csis"
+}
