@@ -27,7 +27,9 @@ const ProjectLayout = ({ params }: { params: { slug: string } }) => {
         </time>
         <h1>{project.title}</h1>
       </div>
-      <Content />
+      <div className='prose prose-md'>
+        <Content />
+      </div>
     </article>
   );
 };

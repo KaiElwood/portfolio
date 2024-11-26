@@ -1,0 +1,30 @@
+---
+title: Flatirons Live Weather
+date: December 17, 2022
+tags: backend, sensors, arduino, physical computing
+imgSrc: /imgs/hurricanes.png
+---
+
+For this project, I wanted to develop a visual representation of the weather in Boulder, CO. I went through a prolonged design phase, as I thought about the best possible ways to represent the weather.
+
+- layered (3D) representation with lights
+- 2D representation with lights
+- virtual representation using D3
+
+I started the project by tracing out the outline of the Flatirons on cardboard based on a photo I found online. I cut it to size, and quickly realized that I would need some sort of housing for the cardboard to make sure that they didn't fall out. 
+
+I found a "shadow box" at the local arts and crafts store, and I thought it would be perfect. I cut the cardboard to fit the box, and then purchased some LEDs to light up the cardboard between each layer. However, I quickly realized that the cardboard completely blocked the light, and also looked really bad.
+
+I went back to the drawing board and asked a couple people for advice. I was advised to look into acrylic, given that it can let light through. I went to Canal Plastics Center in Lower Manhattan and found the perfect frosted acrylic that would enable some light to pass through, but wouldn't be too transparent. In hidsight, I could have even gone for less transparency, as the brightness of the LEDs led to me needing to do a little bit more to diffuse the light down the line.
+
+I cut the acrylic using a laser cutter at the NYU IMA lab, and realized that I had nothing to hold the acrylic in place to keep it from sliding from side to side. Additionally, the lights from the LEDs were easily seen from behind the acrylic because there wasn't enough diffusion happening. It didn't look very pretty.
+
+using a laser cutter. I then used a 3D printer to create a 3D model of the Flatirons. I then used a laser cutter to cut out the outline of the Flatirons from a piece of plywood. 
+[![Hurricanes data viz](/imgs/hurricanes.png)](https://www.csis.org/analysis/digital-transformation-western-hemisphere)
+I developed this data visualization for an article on the impact of hurricanes on regional economies in South America. The visualization was built using highcharts. 
+
+The data was generated from the CSIS Americas program, which explores the financial impact of climate change on the Americas in an article about digital transformation in the Americas. 
+
+The visualization shows the number of hurricanes per year, the deaths cause by each hurricane, and the economic damage of each hurricane, using circle size, color, and position as variables. sourced from the National Oceanic and Atmospheric Administration (NOAA) and the US Department of Commerce. The visualization shows the number of hurricanes that have hit the US since 1900, the number of deaths and the economic impact of each hurricane. 
+
+You can see the rest of the article here: [CSIS Americas Article](https://www.csis.org/analysis/digital-transformation-western-hemisphere)
