@@ -6,13 +6,16 @@ class Flower {
   length: number;
   phase: number;
   rotationSpeed: number;
-  swaySpeed: number;
+  windSpeed: number;
+  noisePos: number;
+  noiseInc: number;
+  maxWindSpeed: number;
   stemColor: string;
   stemPoints: {x: number; y: number}[];
   numPetals: number;
   petals: Petal[];
 
-  constructor(x: number, y: number, segments: number, weight: number, length: number, rotationSpeed: number, swaySpeed: number, stemColor: string) {
+  constructor(x: number, y: number, segments: number, weight: number, length: number, rotationSpeed: number, windSpeed: number, maxWindSpeed: number, noisePos?: number, stemColor?: string) {
     this.x = x;
     this.y = y;
     this.segments = segments;
@@ -20,7 +23,10 @@ class Flower {
     this.length = length;
     this.phase = 0;
     this.rotationSpeed = rotationSpeed;
-    this.swaySpeed = swaySpeed;
+    this.windSpeed = windSpeed;
+    this.noisePos = noisePos || 0;
+    this.noiseInc = 0.01;
+    this.maxWindSpeed = maxWindSpeed;
     this.stemColor = stemColor ?? 'black';
     this.stemPoints = [];
     this.numPetals = Math.floor(Math.random() * 5);
@@ -33,9 +39,12 @@ class Flower {
   }
 
   draw(p: any) {
+    this.noisePos += this.noiseInc;
+    // this.swayFlower(p, this.noisePos, this.windSpeed, this.noiseInc);
     this.drawStem(p);
     this.drawFlower(p);
-    this.rotatePetals(p);
+    // this.rotatePetals(p);
+    this.windSpeed = p.noise(this.noisePos) * this.maxWindSpeed;
   }
 
   generateStemPoints(p: any) {
@@ -72,21 +81,31 @@ class Flower {
   }
 
   drawStem(p: any) {
-    const { weight, stemColor, stemPoints } = this;
+    const { weight, stemColor, stemPoints, noisePos, windSpeed } = this;
+    const stemBase = stemPoints[0];
+    p.push();
+    p.translate(stemBase.x, stemBase.y);
+    p.rotate(p.radians(windSpeed));
     p.beginShape();
     p.noFill();
-    let xoff = 0;
     p.stroke(stemColor);
     p.strokeWeight(weight);
-    xoff = xoff + 0.5;
-    let n = p.noise(xoff) * 3;
-    p.strokeWeight(n);
 
-    stemPoints.forEach((point) => {
-      p.curveVertex(point.x, point.y);
+    stemPoints.forEach((point, i) => {
+      // if (i === 0 || i === 1) {
+      //   p.curveVertex(0,0);
+      // } else {
+        // console.log(stemBase.x, stemBase.y, point.x, point.y);
+
+        p.curveVertex(-(stemBase.x - point.x), -(stemBase.y - point.y));
+      // }
+      // p.push();
+      // p.curveVertex(-point.x, -point.y);
+      // p.pop();
     });
 
     p.endShape();
+    p.pop();
   }
 
   drawFlower(p: any) {
@@ -95,9 +114,16 @@ class Flower {
 
   drawPetals(p: any) {
     p.noStroke();
+    const stemBase = this.stemPoints[0];
+    p.push();
+    p.translate(stemBase.x, stemBase.y);
+    p.rotate(p.radians(this.windSpeed));
     this.petals.forEach((petal, index) => {
-      petal.draw(p);
+      // petal.draw(p);
+      p.fill(petal.color);
+      p.ellipse(-(stemBase.x - petal.petalCenterX), -(stemBase.y - petal.petalCenterY), petal.petalSize, petal.petalSize);
     });
+    p.pop();
   }
 
   rotatePetals(p: any) {
@@ -109,16 +135,32 @@ class Flower {
   }
 
   // sway function can be thought of as a sine wave
-  swayFlower(p: any, time: number, amplitude: number, frequency: number) {
+  swayFlower(p: any, noisePos: number, amplitude: number, noiseInc: number) {
     // amplitude is the distance that it sways from one side to the other
+
+    const basePoint = this.stemPoints[0];
     // if point is first or last, then i need it to affect two points. best option may be to use petals
-    for (let i = 0; i < this.stemPoints.length; i++) {
-      let swayOffset = amplitude * Math.sin(p.TWO_PI * frequency * time);
+    for (let i = 2; i < this.stemPoints.length - 1; i++) {
+      const { x, y } = this.stemPoints[i];
+      const noiseValue = p.noise(noisePos);
+      const angle = (p.radians(noiseValue) * amplitude);
+      console.log(angle);
+      const translatedX = x - basePoint.x;
+      const translatedY = y - basePoint.y;
+
+      const rotatedX = translatedX * p.cos(angle) - translatedY * p.sin(angle);
+      const rotatedY = translatedX * p.sin(angle) + translatedY * p.cos(angle);
+
+      const newX = rotatedX + basePoint.x;
+      const newY = rotatedY + basePoint.y;
+      // console.log(newX, newY);
+      // let swayOffset = amplitude * Math.sin(p.TWO_PI * frequency * time);
       // this.petals[i].sway(p, angle, rotationSpeed);
+      this.stemPoints[i] = { x: newX, y: newY };
+      if ( i === this.stemPoints.length - 2) {
+        this.stemPoints[i+1] = { x: newX, y: newY };
+      }
     }
-    const x = p.cos(angle) * rotationSpeed;
-    const y = p.sin(angle) * rotationSpeed;
-    return { x, y };
   }
 
 }

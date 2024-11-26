@@ -10,7 +10,7 @@ const NextReactP5Wrapper = dynamic(() => import('@p5-wrapper/next').then(mod => 
 	ssr: false
 });
 
-const FlowerSketch = (p: any) => {
+const FlowerSketch = () => {
 	const [flowers, setFlowers] = useState<Flower[]>([]);
 	const [dataReady, setDataReady] = useState(false);
 
@@ -23,9 +23,11 @@ const FlowerSketch = (p: any) => {
 				const x = Math.floor(Math.random() * 800);
 				const y = 300;
 				const size = Math.floor(30 + Math.random() * 170);
+				let noiseInit = Math.random() * 1;
+				// console.log(noiseInit);
 				// drawPlant(x, y, size);
 				let rotationSpeed = Math.random();
-				newFlowers.push(new Flower(x, y, 6, 1, size, rotationSpeed, 0.1, 'black'));
+				newFlowers.push(new Flower(x, y, 6, 1, size, rotationSpeed, 0.1, 30, noiseInit, 'black'));
 			}
 			// const newFlowers = [
       //   new Flower(100, 300, 6, 1, 100, 0.1, 0.1, 'black'),
@@ -35,7 +37,7 @@ const FlowerSketch = (p: any) => {
 
 			setFlowers(newFlowers);
       setDataReady(true);
-		}, 100)
+		}, 100);
 	}, []);
 
 	const sketch = (p: any) => {
@@ -44,20 +46,20 @@ const FlowerSketch = (p: any) => {
 			p.background(255);
 			flowers.forEach(flower => {
 				flower.setup(p);
-			})
-		}
+			});
+		};
 
 		p.draw = () => {
 			p.background(255);
 			flowers.forEach(flower => {
 				flower.draw(p);
-			})
+			});
 			// p.noLoop();
-		}
-	}
+		};
+	};
 
 	return <NextReactP5Wrapper sketch={sketch} />;
-}
+};
 
 export default FlowerSketch;
 
@@ -82,7 +84,7 @@ export default FlowerSketch;
 // 		// (async () => {
 // 		// 	await fetchData();
 // 		//   })();
-// 	}
+// 	};
 
 // 	// TODO: draw plants slowly depending on data, 
 // 	// then rotate flowers around plants and slowly move them from side to side
@@ -107,7 +109,7 @@ export default FlowerSketch;
 // 			p.drawPlants();
 // 			p.noLoop();
 // 		} 
-// 	}
+// 	};
 
 
 // 	// p.drawPlant = (x, y, size) => {
@@ -152,19 +154,19 @@ export default FlowerSketch;
 // 	  for (let i = 0; i < numberOfPlants; i++) {
 // 		const x = p.random(p.width);
 // 		const y = p.height;
-// 		const size = p.random(30, 200) + p.map(humidityData, 0, 100, 0, 20)
+// 		const size = p.random(30, 200) + p.map(humidityData, 0, 100, 0, 20);
 // 		console.log('x: ', x, ' y: ', y, ' size: ', size);
 // 		// drawPlant(x, y, size);
 // 		p.makeFlowers(x,y,6,1,size);
 // 	  }
-// 	}
+// 	};
 	
 // 	p.makePetals = (finalPoint, length)=> {
 // 		const { x,y } = finalPoint;
 // 		// Flower
-// 		p.noStroke()
-// 		let xoff = 0
-// 		let numPetals = p.random(5)
+// 		p.noStroke();
+// 		let xoff = 0;
+// 		let numPetals = p.random(5);
 // 		p.fill(255, 100, 100);
 // 		  const flowerCenterY = y;
 // 		  for (let angle = 0; angle < p.TWO_PI; angle += p.PI / numPetals) {
@@ -174,32 +176,32 @@ export default FlowerSketch;
 // 			const petalY = flowerCenterY + p.sin(angle) * flowerSize;
 // 			p.ellipse(petalX, petalY, flowerSize, flowerSize);
 // 		  }
-// 	  }
+// 	  };
 	  
 // 	  p.makeFlowers = (x, y, segments, weight, length) => {
-// 		let stemPoints = p.makeStems(x, y, segments, weight, length)
+// 		let stemPoints = p.makeStems(x, y, segments, weight, length);
 // 		// console.log(stemPoints[segments])
-// 		p.makePetals(stemPoints[segments], length)
-// 	  }
+// 		p.makePetals(stemPoints[segments], length);
+// 	  };
 	  
 // 	p.makeStems = (x: number, y: number, segments: number, weight: number, length: number): {x: number, y: number}[] => {
-// 		p.beginShape()
-// 		console.log("starting stem")
-// 		p.noFill()
-// 		let xoff = 0
+// 		p.beginShape();
+// 		console.log("starting stem");
+// 		p.noFill();
+// 		let xoff = 0;
 // 		// Add the first point
-// 		p.stroke('black')
-// 		p.strokeWeight(weight)
-// 		p.curveVertex(x, y)
-// 		p.curveVertex(x, y)
-// 		console.log(x,y)
-// 		console.log(x,y)
+// 		p.stroke('black');
+// 		p.strokeWeight(weight);
+// 		p.curveVertex(x, y);
+// 		p.curveVertex(x, y);
+// 		console.log(x,y);
+// 		console.log(x,y);
 // 		xoff = xoff + 0.5;
 // 		let n = p.noise(xoff) * 3;
-// 		  p.strokeWeight(n)
+// 		  p.strokeWeight(n);
 		
 // 		// Save points for visualization later
-// 		let points = [{x: x, y: y}] //<----- Add initial point here
+// 		let points = [{x: x, y: y}]; //<----- Add initial point here
 		
 // 		// Draw line
 // 		for (let i = 0; i < segments; i++){
@@ -207,22 +209,22 @@ export default FlowerSketch;
 // 		  let xRand = p.random(-(p.width * 0.025), p.width * 0.025);
 		  
 // 		  // let droop = random(length/10, length/3)
-// 		  let nextYPoint = -(length / segments)
+// 		  let nextYPoint = -(length / segments);
 		  
 // 		  // Add point to curve
 // 		  // nextYPoint = i == segments-1 ? droop : -(length / segments)
 // 		  p.curveVertex(x += xRand, y += nextYPoint);
-// 			console.log(x,y)
+// 			console.log(x,y);
 		  
 // 		  // Save point
-// 		  points.push({x: x, y: y})
+// 		  points.push({x: x, y: y});
 		  
 // 		}
-// 		p.curveVertex(x, y)
-// 		console.log(x,y)
-// 		p.endShape()
+// 		p.curveVertex(x, y);
+// 		console.log(x,y);
+// 		p.endShape();
 // 		return points;
-// 	  }
+// 	  };
 // };
 
 // export default function FlowerSketch() {

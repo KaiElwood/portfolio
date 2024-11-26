@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns';
 import { Post, allPosts } from 'contentlayer/generated';
-import { useMDXComponent } from 'next-contentlayer/hooks';
+import { useMDXComponent } from 'next-contentlayer2/hooks';
 import { MetadataParams } from 'app/types/MetadataParams';
 
 // this creates the static paths for the posts

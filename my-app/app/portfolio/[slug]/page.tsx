@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns';
 import { Project, allProjects } from 'contentlayer/generated';
-import { useMDXComponent } from 'next-contentlayer/hooks';
+import { useMDXComponent } from 'next-contentlayer2/hooks';
 import { MetadataParams } from 'app/types/MetadataParams';
 
 export const generateStaticParams = async () => allProjects.map((project) => ({ slug: project.slug }));
