@@ -6,7 +6,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
  
 const nextConfig = {
 	reactStrictMode: false,
-	swcMinify: true
+	swcMinify: true,
+	async rewrites() {
+		return [{ source: '/payroll_data', destination: '/payroll_data/index.html' }];
+	}
 };
  
 module.exports = withContentlayer(withBundleAnalyzer(nextConfig));
