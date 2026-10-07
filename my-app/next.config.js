@@ -8,7 +8,10 @@ const nextConfig = {
 	reactStrictMode: false,
 	swcMinify: true,
 	async rewrites() {
-		return [{ source: '/payroll_data', destination: '/payroll_data/index.html' }];
+		return [
+			{ source: '/payroll_data', destination: 'https://kaielwood.github.io/payroll_data/' },
+			{ source: '/payroll_data/:path*', destination: 'https://kaielwood.github.io/payroll_data/:path*' },
+		];
 	}
 };
  
