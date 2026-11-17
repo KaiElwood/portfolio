@@ -20,14 +20,14 @@ const ProjectLayout = ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <article className="py-8 mx-auto max-w-xl">
-      <div className="mb-8 text-center">
-        <time dateTime={project.date} className="mb-1 text-xs text-gray-600">
+    <article className="page-section mx-auto w-full max-w-prose">
+      <div className="mb-8">
+        <time dateTime={project.date} className="mb-2 block text-sm text-gray-600">
           {format(parseISO(project.date), 'LLLL d, yyyy')}
         </time>
-        <h1>{project.title}</h1>
+        <h1 className="page-title">{project.title}</h1>
       </div>
-      <div className='prose prose-md'>
+      <div className="prose max-w-none">
         <Content />
       </div>
     </article>

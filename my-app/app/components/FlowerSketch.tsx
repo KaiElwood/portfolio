@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from "react";
 import { P5CanvasInstance, type Sketch } from "@p5-wrapper/react";
 import { getData } from "./Flowers";
-import "./classes.css";
 import Flower from './Plants';
 
 const NextReactP5Wrapper = dynamic(() => import('@p5-wrapper/next').then(mod => mod.NextReactP5Wrapper), {

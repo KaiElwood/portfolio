@@ -1,14 +1,11 @@
-import BlogList from "app/components/BlogList";
-import PortfolioList from "app/components/PortfolioList";
-import { allPosts } from "contentlayer/generated";
+import BlogList from 'app/components/BlogList';
+import { allPosts } from 'contentlayer/generated';
 
 export default function Page() {
-	return(
-		<div className="flex-grow">
-			<h2 className="text-3xl pb-2 border-b mb-5 font-bold">Blog</h2>
-			<div className="">
-				<BlogList posts={allPosts}/>		
-			</div>
-		</div>
-	);
+  return (
+    <div className="page-section">
+      <h1 className="page-title">Blog</h1>
+      <BlogList posts={allPosts} />
+    </div>
+  );
 }

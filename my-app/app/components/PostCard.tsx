@@ -1,45 +1,26 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { format, parseISO } from 'date-fns';
 import { Project } from 'contentlayer/generated';
-import { useMDXComponent } from 'next-contentlayer2/hooks';
-import Image from 'next/image';
+import styles from './PostCard.module.css';
 
-
-const PostCard = (post: Project) => {
-	const Content = useMDXComponent(post.body.code);
-  
-	return (
-		<Link href={post.url} legacyBehavior>
-			<div className="box relative cursor-pointer p-5 mb-8 bg-yellow-400">
-				<div className='w-full h-52 relative'>
-					<Image 
-						fill
-						src={post.imgSrc}
-						alt={post.title}
-						style={{objectFit: "cover"}}
-					/>
-				</div>
-				<h3 className="text-xl mt-2 font-bold text-black-700 hover:text-slate-700">
-				<Link href={post.url} legacyBehavior>
-					{post.title}
-				</Link>
-				</h3>
-				<time dateTime={post.date} className="block mb-4 text-xs text-gray-600">
-				{format(parseISO(post.date), 'LLLL d, yyyy')}
-				</time>
-				{/* <div className="text-sm">
-				<Content />
-				</div> */}
-				<div className="mt-auto pt-4 flex flex-wrap gap-1">
-					{(post.tags ?? '').split(',').map((tag, idx) => (
-						<span key={idx} className="inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-semibold text-gray-600 mr-1 mb-2">
-							{tag}
-						</span>
-					))}
-				</div>
-			</div>
-		</Link>
-	);
-  };
-
-export default PostCard;
+export default function PostCard(project: Project) {
+  const tags = (project.tags ?? '').split(',').map((tag) => tag.trim()).filter(Boolean);
+  return (
+    <Link href={project.url} className={`${styles.card} flex min-w-0 flex-col bg-yellow-400 p-5`}>
+      <div className="relative h-52">
+        <Image fill src={project.imgSrc} alt={project.title} className="object-cover"
+          sizes="(min-width: 1024px) 424px, (min-width: 768px) calc((100vw - 176px) / 2), calc(100vw - 80px)" />
+      </div>
+      <h2 className="mt-4 text-xl/7 font-bold">{project.title}</h2>
+      <time dateTime={project.date} className="mt-2 text-xs text-gray-700">
+        {format(parseISO(project.date), 'LLLL d, yyyy')}
+      </time>
+      <div className="mt-auto flex flex-wrap gap-2 pt-4">
+        {tags.map((tag) => (
+          <span key={tag} className="rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">{tag}</span>
+        ))}
+      </div>
+    </Link>
+  );
+}

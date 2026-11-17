@@ -1,13 +1,11 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-const Footer = () => {
+export default function Footer() {
   return (
-	<div className="min-h-10 border-t border-solid">
-		<Link className="text-sm" href={"https://www.linkedin.com/in/kai-elwood-dieu/"}>
-			Linkedin
-		</Link>
-	</div>
+    <footer className="border-t py-6 text-sm">
+      <Link className="hover:underline underline-offset-4" href="https://www.linkedin.com/in/kai-elwood-dieu/">
+        LinkedIn
+      </Link>
+    </footer>
   );
-};
-
-export default Footer;
+}

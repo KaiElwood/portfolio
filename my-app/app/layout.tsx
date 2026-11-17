@@ -1,26 +1,23 @@
 import type { Metadata } from 'next';
-import { Inter, Work_Sans } from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
 import Footer from './components/Footer';
-const work = Work_Sans({ subsets: ['latin'] });
 import NavBar from './components/NavBar';
-import "./globals.css";
+import './globals.css';
+
+const jetbrains = JetBrains_Mono({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Kai's Garden",
   description: 'Welcome to my garden',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={work.className}>
-        <div className="md:max-w-2xl lg:max-w-5xl min-h-screen m-auto grid grid-rows-footer">
+      <body className={jetbrains.className}>
+        <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-5 sm:px-8">
           <NavBar />
-          {children}
+          <main className="flex min-w-0 flex-1 flex-col">{children}</main>
           <Footer />
         </div>
       </body>

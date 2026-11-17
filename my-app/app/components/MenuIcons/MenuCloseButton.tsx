@@ -4,9 +4,10 @@ import { MenuButtonProps } from 'app/types/MenuButtonProps';
 const MenuOpenButton: React.FC<MenuButtonProps> = ({ menuOpen, onClick }) => {
 	return (
 		<button
-						className={`${!menuOpen ? "hidden" : null} text-white absolute m-6 top-0 right-0 lg:hidden block`}
+						className={`${!menuOpen ? "hidden" : ""} text-white absolute m-6 top-0 right-0 lg:hidden block`}
 						onClick={onClick}
-						aria-label="Toggle menu"
+						type="button"
+                        aria-label="Close menu"
 					>
 						<svg
 							className="w-6 h-6"

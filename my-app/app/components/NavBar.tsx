@@ -1,51 +1,52 @@
 "use client";
-import Link from "next/link";
-import MenuToggleButton from "./MenuIcons/MenuOpenButton";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import "./classes.css";
-import { Space_Mono } from 'next/font/google';
-const space = Space_Mono({ subsets: ["latin"], weight: ["700", "400"] });
-import MenuCloseButton from "./MenuIcons/MenuCloseButton";
 
-const NavBar = () => {
-	const pathName = usePathname();
-	const [menuOpen, setMenuOpen] = useState(false);
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import MenuOpenButton from './MenuIcons/MenuOpenButton';
+import MenuCloseButton from './MenuIcons/MenuCloseButton';
 
-	const toggleMenu = () => {
-		setMenuOpen(!menuOpen);
-	};
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/blog', label: 'Blog' },
+];
 
-	return (
-		<>
-			<div className="items-center flex-row flex justify-between h-20">
-				<div className="z-50">			
-					<Link className={`z-50 ${space} font-bold font-italic`} href={'/'} >
-						Kai Elwood-Dieu
-					</Link>
-				</div>
-				<MenuToggleButton menuOpen={menuOpen} onClick={toggleMenu} />
-				<div
-					className={`${ !menuOpen ? "hidden lg:flex" : null} 
-					flex-col fixed lg:relative h-full lg:h-fit w-full lg:w-fit top-0 left-0 justify-around lg:space-between items-center bg-backblack lg:bg-transparent z-50 text-white lg:text-black font-4xl lg:font-xl font-bold lg:font-normal flex lg:flex-row`}
-				>
-					<Link className={`px-6 text-base hover:underline underline-offset-4 ${pathName === '/' ? 'underline' : ''}`} href={"/"}>
-						Home
-					</Link>
-					<Link className={`px-6 text-base hover:underline underline-offset-4 ${pathName === '/about' ? 'underline' : ''}`} href={"/about"}>
-						About
-					</Link>
-					<Link className={`px-6 text-base hover:underline underline-offset-4 ${pathName === '/portfolio' ? 'underline' : ''}`} href={"/portfolio"}>
-						Portfolio
-					</Link>
-					<Link className={`px-6 text-base hover:underline underline-offset-4 ${pathName === '/blog' ? 'underline' : ''}`} href={"/blog"}>
-						Blog
-					</Link>
-					<MenuCloseButton menuOpen={menuOpen} onClick={toggleMenu} />
-				</div>
-			</div>
-		</>
-	);
-};
+export default function NavBar() {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
 
-export default NavBar;
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeMenu();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [menuOpen]);
+
+  return (
+    <header className="flex h-20 shrink-0 items-center justify-between gap-4">
+      <Link className="font-bold" href="/" onClick={closeMenu}>Kai Elwood-Dieu</Link>
+      <MenuOpenButton menuOpen={menuOpen} onClick={() => setMenuOpen(true)} />
+      <nav
+        id="site-navigation"
+        aria-label="Main navigation"
+        className={`${menuOpen ? 'flex' : 'hidden'} fixed inset-0 z-50 flex-col items-center justify-center gap-8 bg-backblack text-xl font-bold text-white lg:static lg:flex lg:flex-row lg:gap-6 lg:bg-transparent lg:text-base lg:font-normal lg:text-black`}
+      >
+        {links.map(({ href, label }) => {
+          const active = href === '/' ? pathname === href : pathname.startsWith(href);
+          return (
+            <Link key={href} href={href} onClick={closeMenu} aria-current={active ? 'page' : undefined}
+              className={`underline-offset-4 hover:underline ${active ? 'underline' : ''}`}>
+              {label}
+            </Link>
+          );
+        })}
+        <MenuCloseButton menuOpen={menuOpen} onClick={closeMenu} />
+      </nav>
+    </header>
+  );
+}

@@ -1,0 +1,21 @@
+.card {
+  position: relative;
+  isolation: isolate;
+}
+
+.card::after {
+  --color: transparent;
+  content: "";
+  position: absolute;
+  inset: 20px -20px -20px 20px;
+  z-index: -1;
+  border: solid transparent;
+  border-width: 0 10px 10px 0;
+  border-image: repeating-linear-gradient(-45deg, transparent 0 4px, var(--color) 0 8px) 10;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, calc(100% - 10px) 10px, 100% 10px, 100% 100%, 10px 100%, 10px calc(100% - 10px), 0 calc(100% - 10px));
+}
+
+.card:hover::after,
+.card:focus-visible::after {
+  --color: #ff6465;
+}

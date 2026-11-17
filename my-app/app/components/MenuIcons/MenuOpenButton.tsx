@@ -4,9 +4,12 @@ import { MenuButtonProps } from 'app/types/MenuButtonProps';
 const MenuOpenButton: React.FC<MenuButtonProps> = ({ menuOpen, onClick }) => {
 	return (
 		<button
-			className={`${menuOpen ? "hidden" : null} lg:hidden block`}
+			className={`${menuOpen ? "hidden" : ""} lg:hidden block`}
 			onClick={onClick}
-			aria-label="Toggle menu"
+			type="button"
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            aria-controls="site-navigation"
 		>
 			<svg
 				className="w-6 h-6"

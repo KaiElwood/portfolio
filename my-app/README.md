@@ -1,38 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kai’s Garden
 
-## Getting Started
+A Next.js App Router portfolio with MDX articles and a p5 flower garden.
 
-First, run the development server:
+## Development
 
-```bash
+Use Node 24, then run:
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Run `npm run build` to check the production build,
+including lint and TypeScript checks. `npm start` serves that build.
+The build downloads JetBrains Mono from Google Fonts and self-hosts it.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Styling
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Use the existing Tailwind utilities and the small shared styles in
+`app/globals.css`. No extra styling library or preprocessor is needed.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- `app/layout.tsx` loads JetBrains Mono once and owns the page shell: 1024px
+  maximum width, 20px side padding on small screens, 32px from `sm` upward.
+- The base body style is 16px text with a 26px line height.
+- `page-section` supplies standard page padding: 32px vertically, 48px from `md`.
+- `page-title` supplies 30px/36px bold headings and a 24px bottom margin.
+- `intro-text` supplies 18px/32px introductory copy and a 65ch reading width.
+- Use `max-w-prose` for reading widths within the shared shell. Avoid adding
+  another page gutter. Use `gap-*` for lists and grids instead of combining
+  gaps with child margins.
+- The Tailwind typography plugin styles MDX with `prose max-w-none` inside a
+  `max-w-prose` article wrapper. Its base line height matches the body.
+- `PostCard.module.css` contains the bespoke card border effect. The
+  `.garden-canvas canvas` rule only sizes the flower canvas.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+PostCSS runs Tailwind and Autoprefixer. Use Tailwind responsive prefixes or
+normal CSS media queries when necessary; there is no custom mixin syntax.
