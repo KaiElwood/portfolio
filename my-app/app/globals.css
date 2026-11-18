@@ -3,8 +3,30 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: dark;
+    --garden-background: #303b35;
+    --garden-surface: #39463e;
+    --garden-ink: #f0eee5;
+    --garden-muted: #bdc7bc;
+    --garden-coral: #f1aba3;
+    --garden-lilac: #c9bfea;
+    --garden-butter: #e3d39c;
+    --garden-border: #535b55;
+  }
+
   body {
-    @apply text-base leading-relaxed text-black;
+    @apply bg-garden-background text-base font-normal leading-[1.7] text-garden-ink;
+  }
+
+  ::selection {
+    background: var(--garden-lilac);
+    color: var(--garden-background);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--garden-butter);
+    outline-offset: 5px;
   }
 }
 
@@ -14,16 +36,90 @@
   }
 
   .page-title {
-    @apply mb-6 text-3xl/9 font-bold;
+    @apply mb-6 text-3xl/[1.25] font-medium tracking-[-0.04em];
   }
 
-  .intro-text {
-    @apply max-w-prose text-lg/8;
+  .garden-link {
+    @apply underline decoration-1 underline-offset-4 hover:decoration-2;
   }
+
+  .garden-brand {
+    @apply inline-flex min-h-11 items-center gap-2 text-[11px] font-normal tracking-[0.02em] text-garden-muted;
+  }
+
+  .home-scene {
+    @apply flex flex-1 flex-col justify-center gap-10 py-10 md:gap-12 md:py-16;
+  }
+
+  .home-copy {
+    @apply max-w-[57ch];
+  }
+
+  .home-title {
+    @apply mb-[22px] text-3xl/[1.25] font-medium tracking-[-0.04em] md:text-[38px];
+  }
+
+  .flower-panel {
+    @apply flex aspect-[19/10] w-full items-end overflow-hidden bg-garden-surface sm:aspect-[8/3];
+  }
+}
+
+.garden-canvas {
+  width: 100%;
 }
 
 .garden-canvas canvas {
   display: block;
   width: 100% !important;
   height: auto !important;
+}
+
+/* The running chart shares the site's type and palette, including its data labels. */
+.running-garden {
+  --background: var(--garden-background);
+  --foreground: var(--garden-ink);
+  --muted-foreground: var(--garden-muted);
+  --border: var(--garden-border);
+  --sg-winter: #b2cbd8;
+  --sg-spring: #e6b5c8;
+  --sg-summer: #ead79f;
+  --sg-autumn: #e9baa0;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.running-garden .text-small {
+  font-size: 0.75rem;
+}
+
+.running-garden .sg-chart {
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+  font-family: inherit;
+}
+
+.running-garden .sg-chart a {
+  cursor: pointer;
+}
+
+.running-garden .sg-chart a:focus-visible {
+  outline: none; /* The selected flower's halo is the visible focus indicator. */
+}
+
+.running-garden .sg-chart text {
+  font-family: inherit;
+}
+
+.running-garden .sg-season {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.running-garden .sg-swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
 }

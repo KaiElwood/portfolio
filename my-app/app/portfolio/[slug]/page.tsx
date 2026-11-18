@@ -22,7 +22,7 @@ const ProjectLayout = ({ params }: { params: { slug: string } }) => {
   return (
     <article className="page-section mx-auto w-full max-w-prose">
       <div className="mb-8">
-        <time dateTime={project.date} className="mb-2 block text-sm text-gray-600">
+        <time dateTime={project.date} className="mb-2 block text-sm text-garden-muted">
           {format(parseISO(project.date), 'LLLL d, yyyy')}
         </time>
         <h1 className="page-title">{project.title}</h1>

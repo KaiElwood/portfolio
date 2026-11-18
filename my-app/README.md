@@ -1,6 +1,7 @@
 # Kai’s Garden
 
-A Next.js App Router portfolio with MDX articles and a p5 flower garden.
+A Next.js App Router portfolio with MDX articles, the original p5 flower garden,
+and an interactive running garden.
 
 ## Development
 
@@ -11,28 +12,47 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:3000. Run `npm run build` to check the production build,
-including lint and TypeScript checks. `npm start` serves that build.
-The build downloads JetBrains Mono from Google Fonts and self-hosts it.
+Open http://localhost:3000. `npm run build` checks the production build,
+including lint and TypeScript. `npm start` serves that build.
+Next downloads JetBrains Mono at build time and self-hosts it.
 
 ## Styling
 
-Use the existing Tailwind utilities and the small shared styles in
-`app/globals.css`. No extra styling library or preprocessor is needed.
+Use Tailwind and the shared styles in `app/globals.css`. PostCSS runs only
+Tailwind and Autoprefixer; responsive utilities or normal media queries replace
+custom mixins.
 
-- `app/layout.tsx` loads JetBrains Mono once and owns the page shell: 1024px
-  maximum width, 20px side padding on small screens, 32px from `sm` upward.
-- The base body style is 16px text with a 26px line height.
-- `page-section` supplies standard page padding: 32px vertically, 48px from `md`.
-- `page-title` supplies 30px/36px bold headings and a 24px bottom margin.
-- `intro-text` supplies 18px/32px introductory copy and a 65ch reading width.
-- Use `max-w-prose` for reading widths within the shared shell. Avoid adding
-  another page gutter. Use `gap-*` for lists and grids instead of combining
-  gaps with child margins.
-- The Tailwind typography plugin styles MDX with `prose max-w-none` inside a
-  `max-w-prose` article wrapper. Its base line height matches the body.
-- `PostCard.module.css` contains the bespoke card border effect. The
-  `.garden-canvas canvas` rule only sizes the flower canvas.
+- Moss palette tokens live in `globals.css`: background, inset surface, ink,
+  muted text, coral, lilac, butter, and borders. Tailwind’s `garden-*` colors,
+  MDX typography, card effects, and p5 painting all use those tokens.
+- `app/layout.tsx` loads one font and owns the responsive page shell: 896px
+  maximum width, 24px side padding on small screens, 40px from `sm` upward.
+- Body text is 16px with a 1.7 line height. `page-section` supplies standard
+  vertical padding; `page-title` supplies medium-weight 30px headings.
+- Home uses the smaller, mixed-case garden wordmark, a coral flower mark,
+  pastel links, and an inset surface for the animated canvas.
+- Use `max-w-prose` for reading widths inside the shared shell. Use `gap-*`
+  rather than combining parent gaps with child margins.
+- MDX uses the typography plugin with `prose max-w-none`; its colors follow
+  the Moss tokens. `PostCard.module.css` owns the card’s striped accent.
 
-PostCSS runs Tailwind and Autoprefixer. Use Tailwind responsive prefixes or
-normal CSS media queries when necessary; there is no custom mixin syntax.
+## Flowers
+
+`Plants.tsx` retains the original wind, petal, and stem geometry. `FlowerSketch`
+keeps the original random draws, construction parameters, and 800×300 logical
+canvas. It assigns theme colors after setup and clears with the opaque panel
+color every frame. CSS keeps the canvas at 8:3, bottom-aligned in the taller
+mobile panel. Zero flowers is still a possible original random outcome.
+
+## Running garden
+
+`/running` uses the approved seasonal prototype’s date-seeded flower forms and
+spring/drag model. A flower represents a running day; selecting it rotates the
+year and shows the day’s measurements. Cursor movement creates local gusts.
+Reduced motion disables animated transitions.
+
+`app/running/runs.json` is a snapshot of the approved Strava export’s summary
+measurements, rather than a live Strava connection. Dates use New York time;
+distance and pace display in miles. Activity identifiers and GPS tracks remain
+outside this public snapshot. The chart mounts and cleans up its own animation
+frames, observers, and listeners in `RunningGarden.tsx`.

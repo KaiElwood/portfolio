@@ -12,7 +12,7 @@ export default function BlogList({ posts }: BlogListProps) {
         <li key={post.url} className="py-4 first:pt-0">
           <Link className="flex flex-col gap-2 underline-offset-4 hover:underline sm:flex-row sm:justify-between sm:gap-6" href={post.url}>
             <span className="font-semibold">{post.title}</span>
-            <time className="shrink-0 text-sm text-gray-600" dateTime={post.date}>
+            <time className="shrink-0 text-sm text-garden-muted" dateTime={post.date}>
               {format(parseISO(post.date), 'LLLL d, yyyy')}
             </time>
           </Link>

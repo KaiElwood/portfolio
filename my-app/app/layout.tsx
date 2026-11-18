@@ -8,14 +8,14 @@ const jetbrains = JetBrains_Mono({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Kai's Garden",
-  description: 'Welcome to my garden',
+  description: 'A personal garden of data, code, and things I’ve been growing.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={jetbrains.className}>
-        <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-5 sm:px-8">
+        <div className="mx-auto flex min-h-screen min-h-[100svh] w-full max-w-4xl flex-col px-6 sm:px-10">
           <NavBar />
           <main className="flex min-w-0 flex-1 flex-col">{children}</main>
           <Footer />

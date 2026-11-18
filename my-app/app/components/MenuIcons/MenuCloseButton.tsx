@@ -4,7 +4,7 @@ import { MenuButtonProps } from 'app/types/MenuButtonProps';
 const MenuOpenButton: React.FC<MenuButtonProps> = ({ menuOpen, onClick }) => {
 	return (
 		<button
-						className={`${!menuOpen ? "hidden" : ""} text-white absolute m-6 top-0 right-0 lg:hidden block`}
+						className={`${!menuOpen ? "hidden" : ""} text-garden-ink absolute m-6 top-0 right-0 lg:hidden block`}
 						onClick={onClick}
 						type="button"
                         aria-label="Close menu"

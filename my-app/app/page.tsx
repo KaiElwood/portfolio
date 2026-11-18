@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 const DynamicFlowerSketch = dynamic(() => import('./components/FlowerSketch'), {
   ssr: false,
@@ -8,15 +9,16 @@ const DynamicFlowerSketch = dynamic(() => import('./components/FlowerSketch'), {
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col pt-20 md:pt-28">
-      <div>
-        <h1 className="page-title">Hi, I'm Kai</h1>
-        <p className="intro-text">Welcome to my garden! Here, you can scroll through my passion projects and explorations in data viz or read my thoughts on saving our planet.</p>
+    <div className="home-scene">
+      <div className="home-copy">
+        <h1 className="home-title">A few things<br />I've been growing.</h1>
+        <p>Hi, I'm Kai. I make things with data and code, and spend a lot of time outside.</p>
+        <p className="mt-6">
+          You can wander through <Link className="garden-link text-garden-coral" href="/running">my running garden</Link> or explore <Link className="garden-link text-garden-lilac" href="/portfolio">a few projects</Link>.
+        </p>
       </div>
-      <div className="mt-auto pt-12" aria-hidden="true">
-        <div className="garden-canvas aspect-[8/3] w-full max-w-[800px]">
-          <DynamicFlowerSketch />
-        </div>
+      <div className="flower-panel" aria-hidden="true">
+        <div className="garden-canvas"><DynamicFlowerSketch /></div>
       </div>
     </div>
   );

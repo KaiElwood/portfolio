@@ -17,5 +17,5 @@
 
 .card:hover::after,
 .card:focus-visible::after {
-  --color: #ff6465;
+  --color: var(--garden-coral);
 }
