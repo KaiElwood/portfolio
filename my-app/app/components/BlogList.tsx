@@ -1,32 +1,23 @@
-import { Post } from "contentlayer/generated";
+import Link from 'next/link';
+import { Post } from 'contentlayer/generated';
 import { compareDesc, format, parseISO } from 'date-fns';
-import PostCard from "./PostCard";
-import "./classes.css";
 
-type BlogListProps = { posts: Post[] }
+type BlogListProps = { posts: Post[] };
 
-// *****TODO: limit number of postcards to numPost variable, 
-// connect to PostCard 
-
-const BlogList = ({ posts }: BlogListProps) => {
-	const postsSorted = posts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-	return (
-		<>
-			<div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
-				{postsSorted.map((post, idx) => (
-					<div className="my-2" style={{ width: '100%' }} key={idx}>
-						<a className="flex justify-between" href={post.url}>
-							<span className="font-semibold">{post.title}</span>
-							<time style={{ paddingLeft: '12px' }} dateTime={post.date}>
-								{format(parseISO(post.date), 'LLLL d, yyyy')}
-							</time>
-						</a>
-					</div>
-				))}
-			</div>
-		</>
-	);
-};
-
-export default BlogList;
-
+export default function BlogList({ posts }: BlogListProps) {
+  const postsSorted = [...posts].sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  return (
+    <ul className="divide-y">
+      {postsSorted.map((post) => (
+        <li key={post.url} className="py-4 first:pt-0">
+          <Link className="flex flex-col gap-2 underline-offset-4 hover:underline sm:flex-row sm:justify-between sm:gap-6" href={post.url}>
+            <span className="font-semibold">{post.title}</span>
+            <time className="shrink-0 text-sm text-garden-muted" dateTime={post.date}>
+              {format(parseISO(post.date), 'LLLL d, yyyy')}
+            </time>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}

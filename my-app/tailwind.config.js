@@ -1,42 +1,44 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		"./app/**/*.{js,ts,jsx,tsx}",
-		"./pages/**/*.{js,ts,jsx,tsx}",
-		"./components/**/*.{js,ts,jsx,tsx}",
-		"./contentlayer/**/*.{js,ts,jsx,tsx}",
-	],
-	theme: {
-		screens: {
-			'sm': '640px',
-			'md': '768px',
-			'lg': '1024px',
-			'xl': '1280px',
-			'2xl': '1536px',
-		},
-		extend: {
-			minHeight: {
-				'10': '2.5rem',
-			  },
-			  gridTemplateRows: {
-				// Simple 16 column grid
-				'16': 'repeat(16, minmax(0, 1fr))',
-		
-				// Complex site-specific column configuration
-				'footer': '5rem minmax(300px, 1fr) 100px',
-			  },
-			zIndex: {
-				'neg': '-10'
-			},
-			colors: {
-				'backblack': '#000000c4',
-			  },
-			fontFamily: {
-				harbour: ["HARBOUR", 'sans-serif'],
-			},
-		},
-	},
-	plugins: [
-		require('@tailwindcss/typography'),
-	],
+  content: ['./app/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        garden: {
+          background: 'var(--garden-background)',
+          surface: 'var(--garden-surface)',
+          ink: 'var(--garden-ink)',
+          muted: 'var(--garden-muted)',
+          coral: 'var(--garden-coral)',
+          lilac: 'var(--garden-lilac)',
+          butter: 'var(--garden-butter)',
+          border: 'var(--garden-border)',
+        },
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            lineHeight: '1.7',
+            '--tw-prose-body': 'var(--garden-ink)',
+            '--tw-prose-headings': 'var(--garden-ink)',
+            '--tw-prose-lead': 'var(--garden-muted)',
+            '--tw-prose-links': 'var(--garden-lilac)',
+            '--tw-prose-bold': 'var(--garden-ink)',
+            '--tw-prose-counters': 'var(--garden-muted)',
+            '--tw-prose-bullets': 'var(--garden-coral)',
+            '--tw-prose-hr': 'var(--garden-border)',
+            '--tw-prose-quotes': 'var(--garden-ink)',
+            '--tw-prose-quote-borders': 'var(--garden-coral)',
+            '--tw-prose-captions': 'var(--garden-muted)',
+            '--tw-prose-code': 'var(--garden-butter)',
+            '--tw-prose-pre-code': 'var(--garden-ink)',
+            '--tw-prose-pre-bg': 'var(--garden-surface)',
+            '--tw-prose-th-borders': 'var(--garden-border)',
+            '--tw-prose-td-borders': 'var(--garden-border)',
+          },
+        },
+      },
+    },
+  },
+  plugins: [require('@tailwindcss/typography')],
 };

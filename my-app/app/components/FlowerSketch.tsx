@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from "react";
 import { P5CanvasInstance, type Sketch } from "@p5-wrapper/react";
 import { getData } from "./Flowers";
-import "./classes.css";
 import Flower from './Plants';
 
 const NextReactP5Wrapper = dynamic(() => import('@p5-wrapper/next').then(mod => mod.NextReactP5Wrapper), {
@@ -41,16 +40,29 @@ const FlowerSketch = () => {
 	}, []);
 
 	const sketch = (p: any) => {
+    let panelColor = '#39463e';
+    let stemColor = '#bdc7bc';
+    let petalColors: number[][] = [];
+
 		p.setup = () => {
 			p.createCanvas(800, 300);
-			p.background(255);
-			flowers.forEach(flower => {
-				flower.setup(p);
-			});
+      const theme = getComputedStyle(p.canvas);
+      panelColor = theme.getPropertyValue('--garden-surface').trim() || panelColor;
+      stemColor = theme.getPropertyValue('--garden-muted').trim() || stemColor;
+      petalColors = ['--garden-coral', '--garden-lilac', '--garden-butter'].map(token => {
+        const color = theme.getPropertyValue(token).trim() || '#f1aba3';
+        return p.color(color).levels.slice(0, 3);
+      });
+      p.background(panelColor);
+			flowers.forEach((flower, index) => {
+        flower.setup(p);
+        flower.stemColor = stemColor;
+        flower.petals.forEach(petal => { petal.color = petalColors[index % petalColors.length]; });
+      });
 		};
 
 		p.draw = () => {
-			p.background(255);
+			p.background(panelColor);
 			flowers.forEach(flower => {
 				flower.draw(p);
 			});
