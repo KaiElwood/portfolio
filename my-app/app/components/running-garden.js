@@ -141,11 +141,17 @@ export function mountRunningGarden(root, source, routeSource) {
     }else wake();
 
   }
+  function pointFromEvent(event){
+    const bounds=ring.ownerSVGElement.getBoundingClientRect();
+    const {cx,cy,trimY=0}=dimensions;
+    return {
+      x:(event.clientX-bounds.left)*cx*2/bounds.width,
+      y:trimY+(event.clientY-bounds.top)*(cy*2-trimY*2)/bounds.height,
+    };
+  }
   function nearestFlower(event){
     if(!Number.isFinite(event.clientX)||!Number.isFinite(event.clientY))return null;
-    const svg=ring.ownerSVGElement,bounds=svg.getBoundingClientRect();
-    const x=(event.clientX-bounds.left)*dimensions.cx*2/bounds.width;
-    const y=(event.clientY-bounds.top)*dimensions.cy*2/bounds.height;
+    const {x,y}=pointFromEvent(event);
     let closest=null,distance=18*18;
     for(const node of flowerNodes){
       if(!node.tip)continue;
@@ -161,8 +167,7 @@ export function mountRunningGarden(root, source, routeSource) {
   function stirWind(event){
     if(reduced.matches||document.hidden||event.pointerType==='touch')return;
     if(!Number.isFinite(event.clientX)||!Number.isFinite(event.clientY))return;
-    const bounds=ring.ownerSVGElement.getBoundingClientRect();
-    const current={x:(event.clientX-bounds.left)*dimensions.cx*2/bounds.width,y:(event.clientY-bounds.top)*dimensions.cy*2/bounds.height,time:performance.now()};
+    const current={...pointFromEvent(event),time:performance.now()};
     const previous=lastPointer;lastPointer=current;
     if(!previous||current.time-previous.time>140)return;
     const dx=current.x-previous.x,dy=current.y-previous.y,lengthSquared=dx*dx+dy*dy;
@@ -272,7 +277,7 @@ export function mountRunningGarden(root, source, routeSource) {
   function wake(){if(!frame){last=performance.now();frame=requestAnimationFrame(tick);}}
   function draw(){
     lastPointer=null;
-    const w=Math.max(240,Math.round(plot.getBoundingClientRect().width)),h=Math.min(w,560);
+    const w=Math.max(240,Math.min(560,Math.round(plot.getBoundingClientRect().width))),h=w;
     const cx=w/2,cy=h/2,r=h*.26,maxStem=h*.18;
     dimensions={cx,cy,r,maxStem};flowerNodes=[];labels=[];
     const svg=el('svg',{class:'sg-chart',width:w,height:h,role:'group','aria-label':`${year} running garden. Each flower represents one running day. Stem reach shows total distance in miles; petal size shows combined moving pace in minutes per mile; petal colors follow the palette legend. Petal spacing shows moving-time-weighted heart rate. Petal count and irregular shapes are decorative and stable for each date. Outlined petals mean no heart rate. Move your mouse to blow local gusts through the flowers; faster movements create stronger wind. Hover for date and miles. Click a flower or activate it with Enter or Space to highlight it, rotate that day to the top, and show its route outline in the center.`});
@@ -306,8 +311,15 @@ export function mountRunningGarden(root, source, routeSource) {
       group.addEventListener('keydown',event=>{if(event.key===' '||event.key==='Enter'){event.preventDefault();selectRun(run.day);}});
       group.addEventListener('focus',()=>{hovered=run.day;highlight();});
       group.addEventListener('blur',()=>{hovered=null;highlight();});
-      ring.append(group);flowerNodes.push({run,length,path,head,halo,baseMark,group,petals,petalGeometry,...stemDynamics(run,length,r,maxStem)});
+      ring.append(group);flowerNodes.push({run,length,path,head,halo,baseMark,group,petals,petalGeometry,bloomExtent,...stemDynamics(run,length,r,maxStem)});
     }
+    // Trim only unused viewport space outside every flower's full sweep.
+    // Keep geometry and wind in the original square coordinate system.
+    const envelope=Math.max(r,...flowerNodes.map(node=>r+node.length+Math.max(10,node.bloomExtent+3,6)+8));
+    dimensions.trimY=Math.max(0,Math.min(24,cy-envelope));
+    const visibleHeight=h-dimensions.trimY*2;
+    svg.setAttribute('viewBox',`0 ${dimensions.trimY} ${w} ${visibleHeight}`);
+    svg.setAttribute('height',visibleHeight);
     const hoverAt=event=>{
       const nearest=nearestFlower(event);hovered=nearest?nearest.run.day:null;
       const trigger=event.target.closest?.('[data-label]');

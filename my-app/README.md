@@ -52,8 +52,10 @@ mobile panel. Zero flowers is still a possible original random outcome.
 spring/drag model. A flower represents a running day; selecting it rotates the
 year and shows the recorded route outline in the center. The latest recorded
 route is selected on entry. Cursor movement creates local gusts.
-Reduced motion disables animated transitions. Flexbox places the chart to the
-right of the text on desktop and underneath it on smaller screens.
+Reduced motion disables animated transitions. The chart stays below the text
+at every screen size, in a left-aligned drawing area no wider than 560px.
+Unused viewport padding is trimmed within the full flower-motion envelope;
+pointer coordinates account for that trim.
 
 `app/running/runs.json` is a snapshot of the approved Strava export’s summary
 measurements, rather than a live Strava connection. Dates use New York time;
