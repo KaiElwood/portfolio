@@ -54,6 +54,7 @@ year and shows the recorded route outline in the center. The latest recorded
 route is selected on entry. Cursor movement creates local gusts.
 Reduced motion disables animated transitions. The chart stays below the text
 at every screen size, in a left-aligned drawing area no wider than 560px.
+The plot is pulled up by 4rem to sit closer to the controls.
 Unused viewport padding is trimmed within the full flower-motion envelope;
 pointer coordinates account for that trim.
 

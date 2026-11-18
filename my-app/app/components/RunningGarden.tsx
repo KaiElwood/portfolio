@@ -14,11 +14,11 @@ export default function RunningGarden() {
   }, []);
 
   return (
-    <div ref={root} id="strava-garden" className="running-garden space-y-4">
+    <div ref={root} id="strava-garden" className="running-garden">
       <div className="min-w-0 max-w-prose">
         <h1 className="page-title">A year in bloom</h1>
         <p className="mb-6 max-w-prose text-garden-muted">A flower for each running day. Select a flower to see the route in the center.</p>
-        <div className="inline-grid grid-cols-[auto_auto] items-center gap-3 text-sm">
+        <div className="relative z-10 inline-grid grid-cols-[auto_auto] items-center gap-3 text-sm">
           <label htmlFor="sg-year">Year</label>
           <div className="relative">
             <select id="sg-year" className="h-11 w-24 appearance-none rounded-none border border-garden-border bg-garden-surface py-2 pl-3 pr-9 text-base leading-normal text-garden-ink sm:text-sm" />
@@ -28,7 +28,7 @@ export default function RunningGarden() {
           </div>
         </div>
       </div>
-      <div className="grid w-full min-w-0 max-w-[560px] gap-4">
+      <div className="-mt-16 grid w-full min-w-0 max-w-[560px] gap-4">
         <div id="sg-plot" className="min-w-0" />
         <p id="sg-detail" className="min-h-12 text-sm tabular-nums" aria-live="polite" />
         <p id="sg-route-key" className="text-xs text-garden-muted" hidden />
