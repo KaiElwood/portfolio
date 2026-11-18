@@ -64,14 +64,10 @@
   }
 }
 
-.garden-canvas {
-  width: 100%;
-}
-
-.garden-canvas canvas {
+.home-flowers {
   display: block;
-  width: 100% !important;
-  height: auto !important;
+  width: 100%;
+  height: auto;
 }
 
 /* The running chart shares the site's type and palette, including its data labels. */

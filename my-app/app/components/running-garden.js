@@ -1,3 +1,5 @@
+import { flowerForm, stemDynamics, stemGeometry, advanceFlowerSpring } from './flower-model';
+
 // Ported from the approved seasonal running-garden prototype.
 // The wind/rotation model and date-seeded flower geometry are preserved.
 export function mountRunningGarden(root, source, routeSource) {
@@ -10,16 +12,6 @@ export function mountRunningGarden(root, source, routeSource) {
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   const dates=new Map();
   for(const run of source.runs){if(!dates.has(run.date))dates.set(run.date,[]);dates.get(run.date).push(run);}
-  function flowerForm(key){
-    let seed=2166136261;
-    for(const character of key){seed^=character.charCodeAt(0);seed=Math.imul(seed,16777619)>>>0;}
-    const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
-    const count=1+Math.floor(random()*7),rotation=random()*TAU;
-    const dots=Array.from({length:count},(_,i)=>({angle:rotation+(i===0?.72:i/count*TAU)+(random()-.5)*.75,radius:.65+random()*.7,orbit:.72+random()*.65}));
-    const meanRadius=dots.reduce((sum,dot)=>sum+dot.radius,0)/count,meanOrbit=dots.reduce((sum,dot)=>sum+dot.orbit,0)/count;
-    for(const dot of dots){dot.radius/=meanRadius;dot.orbit/=meanOrbit;}
-    return {dots,stemPhase:random()*TAU,stemFrequency:1.1+random()*.9};
-  }
   const allRuns=[...dates].map(([dateKey,records])=>{
     const year=Number(dateKey.slice(0,4)),stamp=Date.parse(dateKey+'T00:00:00Z');
     const distance=records.reduce((sum,run)=>sum+run.distanceKm,0);
@@ -193,30 +185,6 @@ export function mountRunningGarden(root, source, routeSource) {
     }
     if(pushed)wake();
   }
-  function stemDynamics(run,length,groundRadius,maxStem){
-    const flex=.85+length/maxStem,stiffness=(10+run.petals*.5)/flex;
-    const reference=maxStem*.3;
-    // Integrate drag torque about the root with v(s)=omega*(R+s).
-    // Linear drag: integral((R+s)*s ds); quadratic: integral((R+s)^2*s ds).
-    const moment1=groundRadius*length**2/2+length**3/3;
-    const moment2=groundRadius**2*length**2/2+2*groundRadius*length**3/3+length**4/4;
-    const reference1=groundRadius*reference**2/2+reference**3/3;
-    const reference2=groundRadius**2*reference**2/2+2*groundRadius*reference**3/3+reference**4/4;
-    const a=groundRadius**2,b=2*groundRadius*length,c=length**2;
-    const normalization=a/6+b/8+c/10;
-    // One clamped cantilever mode for the radius-dependent distributed load.
-    // Zero rotation at the root; curvature falls to zero at the free tip.
-    const tangent=t=>(a*(t/2-t*t/2+t**3/6)+b*(t/3-t*t/4+t**4/24)+c*(t/4-t*t/6+t**5/60))/normalization;
-    const midAngles=Array.from({length:8},(_,i)=>tangent((i+.5)/8));
-    const endAngles=Array.from({length:9},(_,i)=>tangent(i/8));
-    const amplitude=Math.min(6,length*.15);
-    const waviness=Array.from({length:9},(_,i)=>{
-      if(i===0||i===8)return 0;
-      const t=i/8;
-      return Math.sin(Math.PI*t)*amplitude*(.75*Math.sin(t*TAU*run.form.stemFrequency+run.form.stemPhase)+.25*Math.sin(t*TAU*2.7-run.form.stemPhase));
-    });
-    return {flex,stiffness,naturalFrequency:Math.sqrt(stiffness),dragLinear:.12*moment1/reference1,dragQuadratic:.012*moment2/reference2,accelerationLag:.003*moment1/reference1,midAngles,endAngles,waviness,segmentLength:length/8,renderPoints:Array.from({length:9},()=>[0,0])};
-  }
   function paint(){
     if(!ring)return;
     const {cx,cy,r}=dimensions;
@@ -224,25 +192,9 @@ export function mountRunningGarden(root, source, routeSource) {
     for(const label of labels){const a=label.angle+theta,labelRadius=r-(r<110?10:19);label.node.setAttribute('x',cx+Math.cos(a)*labelRadius);label.node.setAttribute('y',cy+Math.sin(a)*labelRadius);}
     for(const node of flowerNodes){
       const {run,path,head}=node;
-      // Integrate the cached bending mode, keeping the root fixed and arc
-      // segments the same length as the tip swings. Reuse point buffers.
-      const q=clamp(run.q,-1.65,1.65);
-      const points=node.renderPoints;let x=0,y=0;
-      for(let i=1;i<=8;i++){
-        const midAngle=q*node.midAngles[i-1];
-        x+=Math.sin(midAngle)*node.segmentLength;
-        y-=Math.cos(midAngle)*node.segmentLength;
-        const wave=node.waviness[i];
-        if(wave){const angle=q*node.endAngles[i];points[i][0]=x+Math.cos(angle)*wave;points[i][1]=y+Math.sin(angle)*wave;}
-        else{points[i][0]=x;points[i][1]=y;}
-      }
-      let stem=`M${points[0][0]},${points[0][1]}`;
-      for(let i=0;i<points.length-1;i++){
-        const p0=points[Math.max(0,i-1)],p1=points[i],p2=points[i+1],p3=points[Math.min(points.length-1,i+2)];
-        stem+=` C${p1[0]+(p2[0]-p0[0])/6},${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6},${p2[1]-(p3[1]-p1[1])/6} ${p2[0]},${p2[1]}`;
-      }
+      const {path:stem,x,y,rotation}=stemGeometry(node,run.q);
       path.setAttribute('d',stem);
-      head.setAttribute('transform',`translate(${x},${y}) rotate(${q*180/Math.PI})`);
+      head.setAttribute('transform',`translate(${x},${y}) rotate(${rotation})`);
       const phase=run.day/daysInYear*TAU+theta;
       node.tip=[cx+Math.sin(phase)*r+Math.cos(phase)*x-Math.sin(phase)*y,cy-Math.cos(phase)*r+Math.sin(phase)*x+Math.cos(phase)*y];
     }
@@ -254,15 +206,12 @@ export function mountRunningGarden(root, source, routeSource) {
     let energy=Math.max(Math.abs(target-theta)*dimensions.r,Math.abs(omega)*dimensions.r*.25);
     const quadraticSpeed=omega*Math.abs(omega),windDecay=Math.exp(-3*dt);
     for(const node of flowerNodes){
-      const {run,flex,stiffness,naturalFrequency}=node;
+      const {run,flex,naturalFrequency}=node;
       // A softer spring and lingering, gentler gust produce a slow sway.
       run.mouseWind*=windDecay;
       const rotationDrag=-omega*node.dragLinear-quadraticSpeed*node.dragQuadratic-acceleration*node.accelerationLag;
       const wind=clamp((rotationDrag+run.mouseWind)*flex,-1.05,1.05);
-      // Large gusts ring out longer; small movements fade more quickly.
-      const swing=Math.hypot(run.q,run.v/naturalFrequency);
-      const damping=.65+run.petals*.025+.65/(1+swing*14);
-      run.v+=(stiffness*(wind-run.q)-damping*run.v)*dt;run.q+=run.v*dt;
+      advanceFlowerSpring(run,node,run.petals,wind,dt);
       energy=Math.max(energy,Math.hypot(run.q,run.v/naturalFrequency)*node.length,Math.abs(run.mouseWind)*flex*node.length);
     }
     return energy;
