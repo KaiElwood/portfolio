@@ -10,7 +10,7 @@ export default function Page() {
             fill
             src="/imgs/kai_side.JPG"
             alt="Kai Elwood-Dieu"
-            sizes="(min-width: 896px) 392px, (min-width: 768px) calc((100vw - 112px) / 2), calc(100vw - 48px)"
+            sizes="(min-width: 1440px) 664px, (min-width: 768px) calc((100vw - 112px) / 2), calc(100vw - 48px)"
             className="object-cover"
           />
         </div>

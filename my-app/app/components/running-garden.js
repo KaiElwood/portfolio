@@ -1,9 +1,10 @@
 // Ported from the approved seasonal running-garden prototype.
 // The wind/rotation model and date-seeded flower geometry are preserved.
-export function mountRunningGarden(root, source) {
+export function mountRunningGarden(root, source, routeSource) {
 
   const yearPicker=root.querySelector('#sg-year');
-  const plot=root.querySelector('#sg-plot'),detail=root.querySelector('#sg-detail');
+  const plot=root.querySelector('#sg-plot'),detail=root.querySelector('#sg-detail'),routeKey=root.querySelector('#sg-route-key');
+  const routeShapes=routeSource.routes;
   const legend=root.querySelector('#sg-legend'),paletteKey=root.querySelector('#sg-palette-key');
   const NS='http://www.w3.org/2000/svg',TAU=2*Math.PI,KM_PER_MILE=1.609344;
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -62,7 +63,7 @@ export function mountRunningGarden(root, source) {
   configureYear(year);
   let selected=null,theta=0,omega=0,target=0,frame=0,last=0;
   let lastPointer=null;
-  let ring=null,labels=[],flowerNodes=[],dimensions=null,centerLine=null,centerTitle=null,hovered=null;
+  let ring=null,labels=[],flowerNodes=[],dimensions=null,centerLine=null,centerTitle=null,routeLayer=null,hovered=null;
   const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
   function shortestTarget(day,from){const desired=-day/daysInYear*TAU;return from+Math.atan2(Math.sin(desired-from),Math.cos(desired-from));}
   function applyState(state){
@@ -72,7 +73,8 @@ export function mountRunningGarden(root, source) {
     target=theta=selected===null?0:-selected/daysInYear*TAU;omega=0;
     for(const r of runs){r.q=0;r.v=0;r.mouseWind=0;}
   }
-  applyState({year:years[0],selectedDay:null});
+  const mostRecentRoute = runs.filter(run => routeShapes[run.dateKey]?.status === 'available').sort((a,b) => b.day-a.day)[0];
+  applyState({year:years[0],selectedDay:mostRecentRoute?.day ?? null});
   function highlight(){
     for(const node of flowerNodes){
       const chosen=node.run.day===selected,over=node.run.day===hovered||document.activeElement===node.group;
@@ -92,12 +94,39 @@ export function mountRunningGarden(root, source) {
       if(focused)chosen.group.focus({preventScroll:true});
     }
   }
+  function drawRoute(run){
+    routeLayer.replaceChildren();
+    routeKey.hidden=true;
+    routeKey.textContent='';
+    if(!run)return;
+    const route=routeShapes[run.dateKey];
+    const {cx,cy,r}=dimensions;
+    if(route?.status!=='available'){
+      const message=route?.status==='unavailable'?'Route unavailable':'No GPS recorded';
+      routeLayer.setAttribute('aria-label',`${date(run)}, ${year}: ${message}`);
+      routeLayer.append(el('text',{x:cx,y:cy,'text-anchor':'middle',fill:'var(--muted-foreground)',class:'text-small'},message));
+      return;
+    }
+    const size=r*1.05,left=cx-size/2,top=cy-size/2;
+    const color=flowerColor(run);
+    for(const segment of route.segments){
+      const points=segment.map(([x,y])=>[left+x*size,top+y*size]);
+      const path=points.map(([x,y],index)=>`${index?'L':'M'}${x},${y}`).join(' ');
+      routeLayer.append(el('path',{d:path,fill:'none',stroke:color,'stroke-width':2.2,'stroke-linecap':'round','stroke-linejoin':'round'}));
+      const start=points[0],finish=points[points.length-1];
+      routeLayer.append(el('circle',{cx:start[0],cy:start[1],r:2.5,fill:'var(--foreground)'}));
+      routeLayer.append(el('circle',{cx:finish[0],cy:finish[1],r:3.5,fill:'var(--background)',stroke:'var(--foreground)','stroke-width':1.2}));
+    }
+    routeLayer.setAttribute('aria-label',`${date(run)}, ${year}: route outline, north up`);
+    routeKey.hidden=false;
+    routeKey.textContent='● Start · ○ Finish · North up'+(route.recordedRuns<route.totalRuns?` · GPS for ${route.recordedRuns} of ${route.totalRuns} runs`:'');
+  }
   function updateDetail(){
     const run=runs.find(r=>r.day===selected),count=runs.reduce((sum,r)=>sum+r.count,0);
     detail.textContent=run?info(run):`${year} · ${count} runs · ${runs.length} running days · ${(runs.reduce((sum,r)=>sum+r.distance,0)/KM_PER_MILE).toLocaleString('en-US',{maximumFractionDigits:1})} mi`;
-    if(centerTitle){centerTitle.textContent=run?date(run):String(year);centerTitle.setAttribute('y',dimensions.cy-7);}
-    if(centerLine){centerLine.textContent=run?`${(run.distance/KM_PER_MILE).toFixed(1)} mi`:`${count} runs`;centerLine.setAttribute('y',dimensions.cy+15);}
-    highlight();
+    if(centerTitle){centerTitle.textContent=run?'':String(year);centerTitle.setAttribute('y',dimensions.cy-7);}
+    if(centerLine){centerLine.textContent=run?'':`${count} runs`;centerLine.setAttribute('y',dimensions.cy+15);}
+    drawRoute(run);highlight();
   }
   function changeYear(value){
     if(frame)cancelAnimationFrame(frame);frame=0;theta=0;target=0;omega=0;selected=null;hovered=null;lastPointer=null;
@@ -246,13 +275,14 @@ export function mountRunningGarden(root, source) {
     const w=Math.max(240,Math.round(plot.getBoundingClientRect().width)),h=Math.min(w,560);
     const cx=w/2,cy=h/2,r=h*.26,maxStem=h*.18;
     dimensions={cx,cy,r,maxStem};flowerNodes=[];labels=[];
-    const svg=el('svg',{class:'sg-chart',width:w,height:h,role:'group','aria-label':`${year} running garden. Each flower represents one running day. Stem reach shows total distance in miles; petal size shows combined moving pace in minutes per mile; petal colors follow the palette legend. Petal spacing shows moving-time-weighted heart rate. Petal count and irregular shapes are decorative and stable for each date. Outlined petals mean no heart rate. Move your mouse to blow local gusts through the flowers; faster movements create stronger wind. Hover for date and miles. Click a flower or activate it with Enter or Space to highlight it, rotate that day to the top, and show its date and distance in the center.`});
+    const svg=el('svg',{class:'sg-chart',width:w,height:h,role:'group','aria-label':`${year} running garden. Each flower represents one running day. Stem reach shows total distance in miles; petal size shows combined moving pace in minutes per mile; petal colors follow the palette legend. Petal spacing shows moving-time-weighted heart rate. Petal count and irregular shapes are decorative and stable for each date. Outlined petals mean no heart rate. Move your mouse to blow local gusts through the flowers; faster movements create stronger wind. Hover for date and miles. Click a flower or activate it with Enter or Space to highlight it, rotate that day to the top, and show its route outline in the center.`});
     ring=el('g');svg.append(ring);
     ring.append(el('circle',{cx:0,cy:0,r,fill:'none',stroke:'var(--border)','stroke-width':1}));
     for(let day=0;day<daysInYear;day++){const a=day/daysInYear*TAU-Math.PI/2;ring.append(el('circle',{cx:Math.cos(a)*r,cy:Math.sin(a)*r,r:.85,fill:'var(--muted-foreground)',opacity:.45}));}
     const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     months.forEach((month,i)=>{const day=(Date.UTC(year,i,15)-Date.UTC(year,0,1))/86400000;const node=el('text',{'text-anchor':'middle','dominant-baseline':'middle',fill:'var(--muted-foreground)',class:'text-small'},month);labels.push({node,angle:day/daysInYear*TAU-Math.PI/2});svg.append(node);});
     svg.append(el('line',{x1:cx,y1:cy-r+4,x2:cx,y2:cy-r+12,stroke:'var(--foreground)','stroke-width':1.5,'pointer-events':'none'}));
+    routeLayer=el('g',{'pointer-events':'none',role:'img','aria-label':'Selected run route'});svg.append(routeLayer);
     centerTitle=el('text',{x:cx,y:cy-7,'text-anchor':'middle',fill:'var(--foreground)'});svg.append(centerTitle);
     centerLine=el('text',{x:cx,y:cy+15,'text-anchor':'middle',fill:'var(--muted-foreground)',class:'text-small'});svg.append(centerLine);
     for(const run of runs){
@@ -280,7 +310,7 @@ export function mountRunningGarden(root, source) {
     }
     const hoverAt=event=>{
       const nearest=nearestFlower(event);hovered=nearest?nearest.run.day:null;
-      const trigger=event.target.closest?.('[data-tooltip]');
+      const trigger=event.target.closest?.('[data-label]');
       if(nearest&&trigger)trigger.setAttribute('data-label',brief(nearest.run));
       highlight();
     };

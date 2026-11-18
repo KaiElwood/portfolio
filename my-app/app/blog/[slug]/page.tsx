@@ -22,7 +22,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <article className="page-section mx-auto w-full max-w-prose">
+    <article className="page-section w-full max-w-prose">
       <div className="mb-8">
         <time dateTime={post.date} className="mb-2 block text-sm text-garden-muted">
           {format(parseISO(post.date), 'LLLL d, yyyy')}

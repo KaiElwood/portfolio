@@ -48,7 +48,7 @@
   }
 
   .home-scene {
-    @apply flex flex-1 flex-col justify-center gap-10 py-10 md:gap-12 md:py-16;
+    @apply flex flex-1 flex-col gap-10 py-10 md:gap-12 md:py-16;
   }
 
   .home-copy {
@@ -60,7 +60,7 @@
   }
 
   .flower-panel {
-    @apply flex aspect-[19/10] w-full items-end overflow-hidden bg-garden-surface sm:aspect-[8/3];
+    @apply flex aspect-[19/10] w-full max-w-[816px] items-end overflow-hidden bg-garden-surface sm:aspect-[8/3];
   }
 }
 
@@ -84,8 +84,6 @@
   --sg-spring: #e6b5c8;
   --sg-summer: #ead79f;
   --sg-autumn: #e9baa0;
-  display: grid;
-  gap: 1rem;
   min-width: 0;
 }
 

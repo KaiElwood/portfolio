@@ -10,7 +10,7 @@ export default function PostCard(project: Project) {
     <Link href={project.url} className={`${styles.card} flex min-w-0 flex-col bg-garden-surface p-5`}>
       <div className="relative h-52">
         <Image fill src={project.imgSrc} alt={project.title} className="object-cover"
-          sizes="(min-width: 896px) 352px, (min-width: 768px) calc((100vw - 192px) / 2), calc(100vw - 88px)" />
+          sizes="(min-width: 1440px) 624px, (min-width: 768px) calc((100vw - 192px) / 2), calc(100vw - 88px)" />
       </div>
       <h2 className="mt-4 text-xl/7 font-medium text-garden-lilac">{project.title}</h2>
       <time dateTime={project.date} className="mt-2 text-xs text-garden-muted">

@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={jetbrains.className}>
-        <div className="mx-auto flex min-h-screen min-h-[100svh] w-full max-w-4xl flex-col px-6 sm:px-10">
+        <div className="flex min-h-screen min-h-[100svh] w-full max-w-[1440px] flex-col px-6 sm:px-10">
           <NavBar />
           <main className="flex min-w-0 flex-1 flex-col">{children}</main>
           <Footer />
