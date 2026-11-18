@@ -1,6 +1,6 @@
 # Kai’s Garden
 
-A Next.js App Router portfolio with MDX articles, the original p5 flower garden,
+A Next.js App Router portfolio with MDX articles, a gently swaying SVG flower bed,
 and an interactive running garden.
 
 ## Development
@@ -24,13 +24,13 @@ custom mixins.
 
 - Moss palette tokens live in `globals.css`: background, inset surface, ink,
   muted text, coral, lilac, butter, and borders. Tailwind’s `garden-*` colors,
-  MDX typography, card effects, and p5 painting all use those tokens.
+  MDX typography, card effects, and SVG flowers all use those tokens.
 - `app/layout.tsx` loads one font and owns a left-anchored page shell: 1440px
   maximum width, 24px side padding on small screens, 40px from `sm` upward.
 - Body text is 16px with a 1.7 line height. `page-section` supplies standard
   vertical padding; `page-title` supplies medium-weight 30px headings.
 - Home uses the smaller, mixed-case garden wordmark, a coral flower mark,
-  pastel links, and an inset surface for the animated canvas.
+  pastel links, and an inset surface for the animated flowers.
 - Navigation uses wrapping footer links; there is no top navigation bar or
   mobile popup menu. Articles share the same left edge as the wordmark.
 - Use `max-w-prose` for reading widths inside the shared shell. Use `gap-*`
@@ -40,11 +40,19 @@ custom mixins.
 
 ## Flowers
 
-`Plants.tsx` retains the original wind, petal, and stem geometry. `FlowerSketch`
-keeps the original random draws, construction parameters, and 800×300 logical
-canvas. It assigns theme colors after setup and clears with the opaque panel
-color every frame. CSS keeps the canvas at 8:3, bottom-aligned in the taller
-mobile panel. Zero flowers is still a possible original random outcome.
+`HomeFlowers.tsx` generates two to six SVG flowers on each visit in an 800×300
+viewBox, bottom-aligned in the taller mobile panel. Count, spacing, height,
+bloom size, colors, and petal forms vary, then stay stable during animation.
+Home stems use accumulating random sideways steps, as in the original p5
+sketch, so crookedness and lean vary independently from the animated wind.
+Home and running share the petal
+generator, flexible stem geometry, and damped spring in `flower-model.ts`.
+Home samples one-dimensional gradient noise slowly through time to create a
+gentle breeze, with a spatial offset so neighboring flowers sway together
+without moving in lockstep. Wind sets the spring's target bend; velocity and
+damping let each stem follow and settle naturally. Only SVG paths and head
+transforms change each frame, without React rerenders or a p5 dependency.
+Reduced motion shows still flowers. Animation pauses offscreen and in hidden tabs.
 
 ## Running garden
 

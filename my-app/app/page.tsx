@@ -1,11 +1,5 @@
-"use client";
-
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
-
-const DynamicFlowerSketch = dynamic(() => import('./components/FlowerSketch'), {
-  ssr: false,
-});
+import HomeFlowers from './components/HomeFlowers';
 
 export default function Home() {
   return (
@@ -18,7 +12,7 @@ export default function Home() {
         </p>
       </div>
       <div className="flower-panel" aria-hidden="true">
-        <div className="garden-canvas"><DynamicFlowerSketch /></div>
+        <HomeFlowers />
       </div>
     </div>
   );
