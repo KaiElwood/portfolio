@@ -17,12 +17,11 @@ export default function RunningGarden() {
     <div ref={root} id="strava-garden" className="running-garden flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12 xl:gap-16">
       <div className="min-w-0 lg:w-80 lg:shrink-0 xl:w-96">
         <h1 className="page-title">A year in bloom</h1>
-        <p className="mb-8 max-w-prose text-garden-muted">A flower for each running day. Choose a year, then select a flower to see the route in the center. Move your cursor through the garden to stir the wind.</p>
+        <p className="mb-8 max-w-prose text-garden-muted">A flower for each running day. Select a flower to see the route in the center.</p>
         <label className="flex items-center gap-3 text-sm" htmlFor="sg-year">
           Year
           <select id="sg-year" className="min-h-11 rounded-none border border-garden-border bg-garden-surface px-3 py-2 text-garden-ink" />
         </label>
-        <p className="mt-8 text-xs text-garden-muted">From my Strava export · Dates in New York time · Distances in miles</p>
       </div>
       <div className="grid min-w-0 flex-1 gap-4">
         <div id="sg-plot" className="min-w-0" />

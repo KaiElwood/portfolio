@@ -12,7 +12,7 @@ export default function Home() {
     <div className="home-scene">
       <div className="home-copy">
         <h1 className="home-title">A few things<br />I've been growing.</h1>
-        <p>Hi, I'm Kai. I make things with data and code, and spend a lot of time outside.</p>
+        <p>Hi! I'm Kai. I like making things with code and spending time outside.</p>
         <p className="mt-6">
           You can wander through <Link className="garden-link text-garden-coral" href="/running">my running garden</Link> or explore <Link className="garden-link text-garden-lilac" href="/portfolio">a few projects</Link>.
         </p>

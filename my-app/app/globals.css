@@ -52,7 +52,7 @@
   }
 
   .home-copy {
-    @apply max-w-[57ch];
+    @apply max-w-[70ch];
   }
 
   .home-title {
