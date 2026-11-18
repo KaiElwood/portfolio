@@ -76,10 +76,6 @@
   --foreground: var(--garden-ink);
   --muted-foreground: var(--garden-muted);
   --border: var(--garden-border);
-  --sg-winter: #b2cbd8;
-  --sg-spring: #e6b5c8;
-  --sg-summer: #ead79f;
-  --sg-autumn: #e9baa0;
   min-width: 0;
 }
 
@@ -106,7 +102,7 @@
   font-family: inherit;
 }
 
-.running-garden .sg-season {
+.running-garden .sg-weekday {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
