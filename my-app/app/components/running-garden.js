@@ -1,6 +1,6 @@
 import { flowerForm, stemDynamics, stemGeometry, advanceFlowerSpring } from './flower-model';
 
-// Ported from the approved seasonal running-garden prototype.
+// The running garden uses the approved cosmos weekday palette.
 // The wind/rotation model and date-seeded flower geometry are preserved.
 export function mountRunningGarden(root, source, routeSource) {
 
@@ -10,6 +10,15 @@ export function mountRunningGarden(root, source, routeSource) {
   const legend=root.querySelector('#sg-legend'),paletteKey=root.querySelector('#sg-palette-key');
   const NS='http://www.w3.org/2000/svg',TAU=2*Math.PI,KM_PER_MILE=1.609344;
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const weekdays=[
+    {day:1,label:'Monday',color:'#ffdc68'},
+    {day:2,label:'Tuesday',color:'#ffc34d'},
+    {day:3,label:'Wednesday',color:'#ffa15b'},
+    {day:4,label:'Thursday',color:'#ff786b'},
+    {day:5,label:'Friday',color:'#ed6477'},
+    {day:6,label:'Saturday',color:'#f58db5'},
+    {day:0,label:'Sunday',color:'#ffbad0'},
+  ];
   const dates=new Map();
   for(const run of source.runs){if(!dates.has(run.date))dates.set(run.date,[]);dates.get(run.date).push(run);}
   const allRuns=[...dates].map(([dateKey,records])=>{
@@ -29,22 +38,22 @@ export function mountRunningGarden(root, source, routeSource) {
   const paceMin=Math.min(...allRuns.map(run=>run.pace)),paceMax=Math.max(...allRuns.map(run=>run.pace));
   const hrMin=Math.min(...allRuns.filter(run=>run.hr!==null).map(run=>run.hr)),hrMax=Math.max(...allRuns.filter(run=>run.hr!==null).map(run=>run.hr));
   function flowerColor(run){
-    const month=Number(run.dateKey.slice(5,7));
-    return `var(--sg-${month===12||month<3?'winter':month<6?'spring':month<9?'summer':'autumn'})`;
+    const day=new Date(run.dateKey+'T12:00:00Z').getUTCDay();
+    return weekdays.find(weekday=>weekday.day===day).color;
   }
   function paletteUI(){
-    legend.textContent='Stem reach = miles · Petal size = pace · Petal color = season · Petal spread = heart rate · Hollow = no heart rate';
+    legend.textContent='Stem reach = miles · Petal size = pace · Petal color = weekday · Petal spread = heart rate · Hollow = no heart rate';
     paletteKey.replaceChildren();
-    for(const season of ['winter','spring','summer','autumn']){
-      const label=document.createElement('span');label.className='sg-season';
-      const swatch=document.createElement('span');swatch.className='sg-swatch';swatch.style.background=`var(--sg-${season})`;swatch.setAttribute('aria-hidden','true');
-      label.append(swatch,document.createTextNode(season[0].toUpperCase()+season.slice(1)));paletteKey.append(label);
+    for(const weekday of weekdays){
+      const label=document.createElement('span');label.className='sg-weekday';
+      const swatch=document.createElement('span');swatch.className='sg-swatch';swatch.style.background=weekday.color;swatch.setAttribute('aria-hidden','true');
+      label.append(swatch,document.createTextNode(weekday.label));paletteKey.append(label);
     }
   }
   let year=years[0],runs=[],daysInYear=365;
   for(const value of years){const option=document.createElement('option');option.value=String(value);option.textContent=String(value);yearPicker.append(option);}
   function el(tag,attrs={},text){const n=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n;}
-  function date(run){return new Date(run.dateKey+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});}
+  function date(run){return new Date(run.dateKey+'T12:00:00Z').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'UTC'});}
   function pace(run){const seconds=Math.round(run.pace*KM_PER_MILE*60);return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;}
   function brief(run){return `${date(run)}, ${run.year} · ${(run.distance/KM_PER_MILE).toFixed(2)} miles`;}
   function info(run){const hr=run.hr===null?'HR not recorded':`${Math.round(run.hr)} bpm${run.hrCount<run.count?' (partial HR)':''}`;return `${date(run)}${run.count>1?' · '+run.count+' runs combined':''} · ${(run.distance/KM_PER_MILE).toFixed(2)} mi · ${pace(run)} min/mile · ${hr}`;}
